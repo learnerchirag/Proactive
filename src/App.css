@@ -1,38 +1,80 @@
-.App {
+.header {
+  overflow: hidden;
+  background-color: #163948;
+  padding: 10px 10px;
+}
+.header a {
+  float: left;
+  color: black;
   text-align: center;
+  padding: 13px 20px 13px 20px;
+  text-decoration: none;
+  font-size: 18px;
+  line-height: 25px;
+  color: white;
+  font-weight: 700;
+  font-family: "Montserrat", Sans-serif;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Style the logo link (notice that we set the same value of line-height and font-size to prevent the header to increase when the font gets bigger */
+.header a.logo {
+  font-size: 32px;
+  font-weight: 600;
+  color: white;
+  font-family: "Abril Fatface", Sans-serif;
+  letter-spacing: 5px;
+  margin-left: 10%;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
+/* Change the background color on mouse-over */
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+/* Style the active/current link*/
+.header a.active {
+  background-color: dodgerblue;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+/* Float the link section to the right */
+.header-right {
+  float: right;
+  margin-right: 10%;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.bc-tiles-intro-text {
+  text-align: center;
+  justify-content: center;
+  padding-right: 1.1764705882rem;
+  padding-left: 1.1764705882rem;
+}
+.bc-tiles-wrapper {
+  text-align: center;
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 0 auto;
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
+  min-height: 0px;
+  min-width: 0px;
+  width: 100%;
+  padding-left: 1.1764705882rem;
+  padding-right: 1.1764705882rem;
+}
+.input-range__label {
+  visibility: hidden;
+}
+.input-range__track--active {
+  background: #163948 !important;
+}
+.input-range__slider {
+  background: #163948 !important;
+  border: 1px solid #163948;
+}
+/* Add media queries for responsiveness - when the screen is 500px wide or less, stack the links on top of each other */
+@media screen and (max-width: 500px) {
+  .header a {
+    float: none;
+    display: block;
+    text-align: left;
   }
-  to {
-    transform: rotate(360deg);
+  .header-right {
+    float: none;
   }
 }

@@ -2,21 +2,36 @@ import React, { Component } from "react";
 import { Input, Row, Col, FormGroup, Form, Container } from "reactstrap";
 import InputRange from "react-input-range";
 import "react-input-range/lib/css/index.css";
-import "../css/timeline.scss";
+import "../css/horizonTimeline.css";
 import Timeline from "../components/Timeline";
-export default class ModernFertility extends Component {
+
+class ModernFertility extends Component {
   state = {
     index: 0,
     kidsGap: 2,
+    age: 25,
+    ageChild: 28,
+    kids: null,
+    sheetLoaded: false,
   };
+  handleInput = (event) => {
+    this.setState({
+      [event.target.name]: Number(event.target.value),
+    });
+  };
+
   render() {
-    const age = ["1999-05-05", "1999-06-05"];
+    var ageChildProp = [];
+    for (let i = 0; i < this.state.kids; i++) {
+      ageChildProp.push(this.state.ageChild + i * this.state.kidsGap);
+    }
+
     return (
       <div>
-        <Container fluid>
+        <Container fluid className="pt-5">
           <div className="bc-tiles-wrapper ">
             <div className="bc-tiles-intro-text w-75 mx-auto">
-              <h1>Birth Control</h1>
+              <h1 style={{ fontFamily: "montserrat" }}>Modern Fertility</h1>
               <div className="d-block">
                 <p>
                   Birth control is how you prevent pregnancy. There are lots of
@@ -42,7 +57,13 @@ export default class ModernFertility extends Component {
                   <label>Your age</label>
                 </Col>
                 <Col>
-                  <Input type="number"></Input>
+                  <Input
+                    min={20}
+                    type="number"
+                    name="age"
+                    value={this.state.age}
+                    onChange={this.handleInput}
+                  ></Input>
                 </Col>
               </Row>
             </Col>
@@ -55,7 +76,12 @@ export default class ModernFertility extends Component {
                     </label>
                   </Col>
                   <Col>
-                    <Input type="number"></Input>
+                    <Input
+                      type="number"
+                      name="ageChild"
+                      value={this.state.ageChild}
+                      onChange={this.handleInput}
+                    ></Input>
                   </Col>
                 </Row>
               </FormGroup>
@@ -67,7 +93,12 @@ export default class ModernFertility extends Component {
                     <label>Number of kids you'd like</label>
                   </Col>
                   <Col>
-                    <Input type="number"></Input>
+                    <Input
+                      type="number"
+                      name="kids"
+                      value={this.state.kids}
+                      onChange={this.handleInput}
+                    ></Input>
                   </Col>
                 </Row>
               </FormGroup>
@@ -95,33 +126,16 @@ export default class ModernFertility extends Component {
             </Col>
           </Row>
           <Row>
-            <Timeline />
-            {/* <HorizontalTimeline
-              minEventPadding={20}
-              maxEventPadding={120}
-              linePadding={100}
-              labelWidth={85}
-              fillingMotion={{ stiffness: 150, damping: 25 }}
-              slidingMotion={{ stiffness: 150, damping: 25 }}
-              styles={{
-                background: "#f8f8f8",
-                foreground: "#7b9d6f",
-                outline: "red",
-              }}
-              isTouchEnabled={true}
-              isKeyboardEnabled={true}
-              isOpenBeginning={true}
-              isOpenEnding={true}
-              lineWidth={85}
-              index={this.state.index}
-              indexClick={(index) => {
-                this.setState({ index });
-              }}
-              values={age}
-            /> */}
+            <Timeline
+              age={this.state.age}
+              ageChild={ageChildProp}
+              kids={this.state.kids}
+              kidsGap={this.state.kidsGap}
+            />
           </Row>
         </Container>
       </div>
     );
   }
 }
+export default ModernFertility;

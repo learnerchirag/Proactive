@@ -5,7 +5,11 @@ export default class Header extends Component {
     return (
       <div style={{ position: "relative" }}>
         <div className="header">
-          <a href="http://www.proactiveforher.com/" className="logo">
+          <a
+            href="http://www.proactiveforher.com/"
+            className="logo"
+            style={{ fontFamily: "abril fatface" }}
+          >
             Proactive
           </a>
           <div className="header-right">

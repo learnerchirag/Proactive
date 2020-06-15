@@ -1,3 +1,11 @@
+$numDots: 20;
+$parentWidthBase: 0.8;
+$parentWidth: $parentWidthBase * 100vw;
+$parentMaxWidth: 1000px;
+$dotWidth: 25px;
+$dotWidthSm: 17px;
+$active: #2c3e50;
+$inactive: #aeb6bf;
 .flex-parent {
   display: flex;
   flex-direction: column;

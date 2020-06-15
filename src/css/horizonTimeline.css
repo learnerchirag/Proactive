@@ -1,0 +1,4 @@
+.button-forward,
+.button-back {
+  visibility: hidden !important;
+}

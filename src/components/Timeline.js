@@ -1,98 +1,183 @@
-import React from "react";
+import React, { Component } from "react";
+import { Row, Col, Tooltip, UncontrolledTooltip } from "reactstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBaby } from "@fortawesome/free-solid-svg-icons";
+// import "font-awesome/css/font-awesome.css";
 
-export default function Timeline() {
-  return (
-    <React.Fragment>
-      <h1>
-        Notable inventions, <span>1910–2000</span>
-      </h1>
-      <div class="flex-parent">
-        <div class="input-flex-container">
-          <input type="radio" name="timeline-dot" data-description="1910" />
-          <div class="dot-info" data-description="1910">
-            <span class="year">1910</span>
-            <span class="label">headset</span>
-          </div>
-          <input type="radio" name="timeline-dot" data-description="1920" />
-          <div class="dot-info" data-description="1920">
-            <span class="year">1920</span>
-            <span class="label">jungle gym</span>
-          </div>
-          <input
-            type="radio"
-            name="timeline-dot"
-            data-description="1930"
-            checked
-          />
-          <div class="dot-info" data-description="1930">
-            <span class="year">1930</span>
-            <span class="label">chocolate chip cookie</span>
-          </div>
-          <input type="radio" name="timeline-dot" data-description="1940" />
-          <div class="dot-info" data-description="1940">
-            <span class="year">1940</span>
-            <span class="label">Jeep</span>
-          </div>
-          <input type="radio" name="timeline-dot" data-description="1950" />
-          <div class="dot-info" data-description="1950">
-            <span class="year">1950</span>
-            <span class="label">leaf blower</span>
-          </div>
-          <input type="radio" name="timeline-dot" data-description="1960" />
-          <div class="dot-info" data-description="1960">
-            <span class="year">1960</span>
-            <span class="label">magnetic stripe card</span>
-          </div>
-          <input type="radio" name="timeline-dot" data-description="1970" />
-          <div class="dot-info" data-description="1970">
-            <span class="year">1970</span>
-            <span class="label">wireless LAN</span>
-          </div>
-          <input type="radio" name="timeline-dot" data-description="1980" />
-          <div class="dot-info" data-description="1980">
-            <span class="year">1980</span>
-            <span class="label">flash memory</span>
-          </div>
-          <input type="radio" name="timeline-dot" data-description="1990" />
-          <div class="dot-info" data-description="1990">
-            <span class="year">1990</span>
-            <span class="label">World Wide Web</span>
-          </div>
-          <input type="radio" name="timeline-dot" data-description="2000" />
-          <div class="dot-info" data-description="2000">
-            <span class="year">2000</span>
-            <span class="label">Google AdWords</span>
-          </div>
-          <div id="timeline-descriptions-wrapper">
-            <p data-description="1910">
-              And future Call of Duty players would thank them.
-            </p>
-            <p data-description="1920">
-              Because every kid should get to be Tarzan for a day.
-            </p>
-            <p data-description="1930">And the world rejoiced.</p>
-            <p data-description="1940">
-              Because building roads is inconvenient.
-            </p>
-            <p data-description="1950">Ain’t nobody got time to rake.</p>
-            <p data-description="1960">Because paper currency is for noobs.</p>
-            <p data-description="1970">Nobody likes cords. Nobody.</p>
-            <p data-description="1980">Brighter than glow memory.</p>
-            <p data-description="1990">
-              To capitalize on an as-yet nascent market for cat photos.
-            </p>
-            <p data-description="2000">
-              Because organic search rankings take work.
-            </p>
-          </div>
+export default class Timeline extends Component {
+  state = {
+    age: this.props.age,
+    ageChild: this.props.ageChild,
+    kids: this.props.kids,
+    kidsGap: this.props.kidsGap,
+    childTooltip: false,
+  };
+  componentDidMount = () => {
+    this.setState({
+      age: this.props.age,
+      ageChild: this.props.ageChild,
+    });
+  };
+  toggleChildTooltip = () => {
+    this.setState({
+      childTooltip: !this.state.childTooltip,
+    });
+  };
+
+  render() {
+    var age = [];
+    for (let i = this.props.age; i < 52; i++) {
+      age.push(i);
+    }
+    // var ageChild = this.props.ageChild;
+    return (
+      <React.Fragment>
+        <div
+          className="p-5 "
+          style={{ backgroundColor: "#163948", width: "100%" }}
+        >
+          <Row>
+            <div
+              className="w-100"
+              style={{ height: "2px", backgroundColor: "white " }}
+            ></div>
+            {age.map((value, i) => (
+              <Col
+                md="auto"
+                style={{
+                  textAlign: "center",
+                }}
+              >
+                {this.props.ageChild.includes(value) && (
+                  <React.Fragment>
+                    <UncontrolledTooltip
+                      placement="bottom"
+                      target={"child" + i}
+                    >
+                      description of child
+                    </UncontrolledTooltip>
+                    <UncontrolledTooltip placement="top" target="percentage">
+                      percentage
+                    </UncontrolledTooltip>
+                    <div
+                      className=""
+                      style={{
+                        marginTop: "2.6rem",
+                        position: "absolute",
+                        marginLeft: "-14px ",
+                      }}
+                    >
+                      <div id="percentage">
+                        <label style={{ color: "white" }}>%%%</label>
+                      </div>
+                      <div
+                        id={"child" + i}
+                        style={{
+                          backgroundColor: "white",
+                          borderRadius: "100%",
+                          width: "50px",
+                          height: "50px",
+                          verticalAlign: "middle",
+                        }}
+                      >
+                        <FontAwesomeIcon
+                          icon={faBaby}
+                          size="lg"
+                          style={{
+                            verticalAlign: "middle",
+                            transform: "translateY(30%)",
+                          }}
+                        ></FontAwesomeIcon>
+                      </div>
+                      <div
+                        className="mx-auto"
+                        style={{
+                          width: "2px",
+                          height: "10px",
+                          backgroundColor: "white",
+                        }}
+                      ></div>
+                      <label
+                        style={{
+                          color: "white",
+                          display:
+                            (value === this.props.age ||
+                              value === 41 ||
+                              value === 51) &&
+                            "none",
+                        }}
+                      >
+                        {value}
+                      </label>
+                    </div>
+                  </React.Fragment>
+                )}
+                {value === this.props.age && (
+                  <React.Fragment>
+                    <div style={{ marginTop: "-1.5rem" }}>
+                      <small style={{ color: "white" }}>Today</small>
+                    </div>
+                    <div
+                      className="mx-auto"
+                      style={{
+                        width: "2px",
+                        height: "150px",
+                        backgroundColor: "white",
+                        // position: ""
+                        justifyContent: "center",
+                      }}
+                    ></div>
+                    <label style={{ color: "white" }}>{this.props.age}</label>
+                  </React.Fragment>
+                )}
+
+                {value === 41 && (
+                  <React.Fragment>
+                    <div style={{ marginTop: "-1.5rem" }}>
+                      <small style={{ color: "white" }}>
+                        Menopause Transition
+                      </small>
+                    </div>
+                    <div
+                      className="mx-auto"
+                      style={{
+                        width: "2px",
+                        height: "150px",
+                        backgroundColor: "white",
+                      }}
+                    ></div>
+                    <label style={{ color: "white" }}>41</label>
+                  </React.Fragment>
+                )}
+                {value === 51 && (
+                  <React.Fragment>
+                    <div style={{ marginTop: "-1.5rem" }}>
+                      <small style={{ color: "white" }}>Menopause</small>
+                    </div>
+                    <div
+                      className="mx-auto"
+                      style={{
+                        width: "2px",
+                        height: "150px",
+                        backgroundColor: "white",
+                      }}
+                    ></div>
+                    <label style={{ color: "white" }}>51</label>
+                  </React.Fragment>
+                )}
+              </Col>
+            ))}
+            <div
+              className="w-100"
+              style={{
+                height: "2px",
+                backgroundColor: "white ",
+                marginTop: "-2rem",
+              }}
+            ></div>
+          </Row>
         </div>
-      </div>
-
-      <div style="position: absolute; bottom: 15px; right: 10px; font-size: 12px">
-        <a href="https://codepen.io/cjl750/pen/mXbMyo" target="_blank">
-          based off of version 3
-        </a>
-      </div>
-    </React.Fragment>
-  );
+      </React.Fragment>
+    );
+  }
 }

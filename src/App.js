@@ -15,7 +15,7 @@ function App() {
       {/* <Filter /> */}
       {/* <ModernFertility /> */}
       {/* <IrregularPeriods /> */}
-      <HashRouter>
+      <HashRouter basename={process.env.PUBLIC_URL}>
         <Switch>
           <Route
             path="/tools/irregular-periods"

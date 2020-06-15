@@ -6,7 +6,7 @@ import Header from "./components/Header";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faBaby } from "@fortawesome/free-solid-svg-icons";
 import IrregularPeriods from "./tools/IrregularPeriods";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route, HashRouter } from "react-router-dom";
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
       {/* <Filter /> */}
       {/* <ModernFertility /> */}
       {/* <IrregularPeriods /> */}
-      <BrowserRouter>
+      <HashRouter>
         <Switch>
           <Route
             path="/tools/irregular-periods"
@@ -26,7 +26,7 @@ function App() {
             render={(props) => <ModernFertility {...props} />}
           />
         </Switch>
-      </BrowserRouter>
+      </HashRouter>
     </div>
   );
 }

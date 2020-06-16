@@ -15,7 +15,7 @@ function App() {
       {/* <Filter /> */}
       {/* <ModernFertility /> */}
       {/* <IrregularPeriods /> */}
-      <BrowserRouter basename={process.env.PUBLIC_URL}>
+      <HashRouter basename={process.env.PUBLIC_URL}>
         <Switch>
           <Route
             path="/tools/irregular-periods"
@@ -26,7 +26,7 @@ function App() {
             render={(props) => <ModernFertility {...props} />}
           />
         </Switch>
-      </BrowserRouter>
+      </HashRouter>
     </div>
   );
 }

@@ -1051,11 +1051,11 @@ export default class IrregularPeriods extends Component {
                   <h6 style={{ fontWeight: "bold" }}>
                     {this.state.activeCauses.length === 0
                       ? " Select a symptom for more information"
-                      : "You could be suffering from " +
+                      : "You could be suffering from" +
                         this.state.activeCauses.map((val, i) => {
                           if (i === this.state.activeCauses.length - 1) {
-                            return causes[val] + ".";
-                          } else return causes[val] + ", ";
+                            return " " + causes[val] + ".";
+                          } else return " " + causes[val];
                         })}
                   </h6>
                 </Col>

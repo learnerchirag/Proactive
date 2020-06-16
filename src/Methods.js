@@ -79,4 +79,18 @@ var methods = [
     value: [],
   },
 ];
-module.exports = { methods };
+const causes = [
+  "",
+  "PCOS",
+  "Endometriosis",
+  "Thyroidism (hypo)",
+  "Thyroidism (hyper)",
+  "Hyperprolactinemia",
+  "PID/ STI's",
+  "POF",
+  "Uterine fibroids",
+  "Eating disorders",
+  "Stress (TBU)",
+  "Drugs/contraceptives",
+];
+module.exports = { methods, causes };

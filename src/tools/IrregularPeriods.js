@@ -18,6 +18,7 @@ import {
   faWhatsapp,
 } from "@fortawesome/free-brands-svg-icons";
 import Select from "react-select";
+import { causes } from "../Methods";
 // import { CSSTransition, CSSTransitionGroup } from "react-transition-group";
 
 export default class IrregularPeriods extends Component {
@@ -28,11 +29,13 @@ export default class IrregularPeriods extends Component {
     q3: null,
     icon: false,
     button: null,
+    activeCauses: [],
     selectedOption: null,
     selectedOption2: null,
     selectedOption3: null,
     activeFilters: [],
     symptoms: 1,
+    aBooked: false,
   };
   handleQ1 = (q) => {
     this.setState({
@@ -131,23 +134,35 @@ export default class IrregularPeriods extends Component {
     }
     this.setState({
       activeFilters,
+      activeCauses: [],
     });
   };
-  handleCauses = (array) => {
+  handleCauses = (array, cause) => {
     if (this.state.activeFilters.length !== 0) {
+      var activeCauses = this.state.activeCauses;
       if (JSON.stringify(array) === JSON.stringify(["16"])) {
         if (this.state.activeFilters.includes("16")) {
+          activeCauses.push(cause);
+
           return true;
         } else {
           return false;
         }
       } else {
         if (this.state.activeFilters.every((val) => array.includes(val))) {
+          // var activeCauses = this.state.activeCauses;
+          activeCauses.push(cause);
+          // this.setState({
+          //   activeCauses,
+          // });
           return true;
         } else {
           return false;
         }
       }
+      this.setState({
+        activeCauses,
+      });
     } else return false;
   };
   render() {
@@ -495,6 +510,7 @@ export default class IrregularPeriods extends Component {
                     bottom: "30px",
                     width: "90%",
                   }}
+                  className="mx-auto"
                   onClick={() => {
                     this.setState({
                       button: 2,
@@ -868,15 +884,10 @@ export default class IrregularPeriods extends Component {
                       <Card
                         className="py-auto causes shadow"
                         style={{
-                          backgroundColor: this.handleCauses([
-                            "2a",
-                            "2b",
-                            "7",
-                            "8a",
-                            "9",
-                            "12",
-                            "16",
-                          ])
+                          backgroundColor: this.handleCauses(
+                            ["2a", "2b", "7", "8a", "9", "12", "16"],
+                            1
+                          )
                             ? "#bd8f88"
                             : "white",
                         }}
@@ -888,12 +899,10 @@ export default class IrregularPeriods extends Component {
                       <Card
                         className="py-auto causes shadow"
                         style={{
-                          backgroundColor: this.handleCauses([
-                            "1",
-                            "2a",
-                            "2b",
-                            "5",
-                          ])
+                          backgroundColor: this.handleCauses(
+                            ["1", "2a", "2b", "5"],
+                            2
+                          )
                             ? "#bd8f88"
                             : "white",
                         }}
@@ -905,16 +914,10 @@ export default class IrregularPeriods extends Component {
                       <Card
                         className="py-auto causes shadow"
                         style={{
-                          backgroundColor: this.handleCauses([
-                            "2a",
-                            "2b",
-                            "8a",
-                            "11",
-                            "12",
-                            "13",
-                            "14a",
-                            "16",
-                          ])
+                          backgroundColor: this.handleCauses(
+                            ["2a", "2b", "8a", "11", "12", "13", "14a", "16"],
+                            3
+                          )
                             ? "#bd8f88"
                             : "white",
                         }}
@@ -926,13 +929,10 @@ export default class IrregularPeriods extends Component {
                       <Card
                         className="py-auto causes shadow"
                         style={{
-                          backgroundColor: this.handleCauses([
-                            "2a",
-                            "8b",
-                            "11",
-                            "12",
-                            "14b",
-                          ])
+                          backgroundColor: this.handleCauses(
+                            ["2a", "8b", "11", "12", "14b"],
+                            4
+                          )
                             ? "#bd8f88"
                             : "white",
                         }}
@@ -945,7 +945,10 @@ export default class IrregularPeriods extends Component {
                       <Card
                         className="py-auto causes shadow"
                         style={{
-                          backgroundColor: this.handleCauses(["2a", "2b", "15"])
+                          backgroundColor: this.handleCauses(
+                            ["2a", "2b", "15"],
+                            5
+                          )
                             ? "#bd8f88"
                             : "white",
                         }}
@@ -957,14 +960,10 @@ export default class IrregularPeriods extends Component {
                       <Card
                         className="py-auto causes shadow"
                         style={{
-                          backgroundColor: this.handleCauses([
-                            "1",
-                            "2c",
-                            "3",
-                            "5",
-                            "10",
-                            "11",
-                          ])
+                          backgroundColor: this.handleCauses(
+                            ["1", "2c", "3", "5", "10", "11"],
+                            6
+                          )
                             ? "#bd8f88"
                             : "white",
                         }}
@@ -976,7 +975,10 @@ export default class IrregularPeriods extends Component {
                       <Card
                         className="py-auto causes shadow"
                         style={{
-                          backgroundColor: this.handleCauses(["2a", "4", "16"])
+                          backgroundColor: this.handleCauses(
+                            ["2a", "4", "16"],
+                            7
+                          )
                             ? "#bd8f88"
                             : "white",
                         }}
@@ -988,14 +990,10 @@ export default class IrregularPeriods extends Component {
                       <Card
                         className="py-auto causes shadow"
                         style={{
-                          backgroundColor: this.handleCauses([
-                            "1",
-                            "2a",
-                            "2b",
-                            "2c",
-                            "6",
-                            "10",
-                          ])
+                          backgroundColor: this.handleCauses(
+                            ["1", "2a", "2b", "2c", "6", "10"],
+                            8
+                          )
                             ? "#bd8f88"
                             : "white",
                         }}
@@ -1008,13 +1006,10 @@ export default class IrregularPeriods extends Component {
                       <Card
                         className="py-auto causes shadow"
                         style={{
-                          backgroundColor: this.handleCauses([
-                            "2a",
-                            "8b",
-                            "11",
-                            "12",
-                            "16",
-                          ])
+                          backgroundColor: this.handleCauses(
+                            ["2a", "8b", "11", "12", "16"],
+                            9
+                          )
                             ? "#bd8f88"
                             : "white",
                         }}
@@ -1026,7 +1021,7 @@ export default class IrregularPeriods extends Component {
                       <Card
                         className="py-auto causes shadow"
                         style={{
-                          backgroundColor: this.handleCauses(["16"])
+                          backgroundColor: this.handleCauses(["16"], 10)
                             ? "#bd8f88"
                             : "white",
                         }}
@@ -1038,7 +1033,7 @@ export default class IrregularPeriods extends Component {
                       <Card
                         className="py-auto causes shadow"
                         style={{
-                          backgroundColor: this.handleCauses(["16"])
+                          backgroundColor: this.handleCauses(["16"], 11)
                             ? "#bd8f88"
                             : "white",
                         }}
@@ -1052,30 +1047,79 @@ export default class IrregularPeriods extends Component {
             </Row>
             <Card className="shadow">
               <Row>
-                <Col></Col>
+                <Col className="py-3 text-center">
+                  <h6 style={{ fontWeight: "bold" }}>
+                    {this.state.activeCauses.length === 0
+                      ? " Select a symptom for more information"
+                      : "You could be suffering from " +
+                        this.state.activeCauses.map((val, i) => {
+                          if (i === this.state.activeCauses.length - 1) {
+                            return causes[val] + ".";
+                          } else return causes[val] + ", ";
+                        })}
+                  </h6>
+                </Col>
+              </Row>
+              <Row>
+                <Col
+                  style={{
+                    borderTop: "1px dashed black",
+                    display: "flex",
+                    alignItems: "flex-end",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Button
+                    style={{
+                      // position: "absolute",
+                      // bottom: "0",
+                      width: "90%",
+                      background: "bottom",
+                      color: "black",
+                    }}
+                  >
+                    Explore all Causes
+                  </Button>
+                </Col>
                 <Col
                   className=""
                   style={{
                     backgroundColor: "#163948",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
                     textAlign: "center",
                     minHeight: "500px",
                     maxHeight: "100%",
                   }}
                 >
-                  <div className="" style={{ alignSelf: "middle" }}>
-                    <div>
-                      <FontAwesomeIcon
-                        icon={faUserMd}
-                        style={{
-                          color: "white",
-                          fontSize: "100px",
-                        }}
-                      />
+                  {!this.state.aBooked && (
+                    <div className="">
+                      <div>
+                        <FontAwesomeIcon
+                          icon={faUserMd}
+                          style={{
+                            color: "white",
+                            fontSize: "100px",
+                          }}
+                          className="my-auto"
+                        />
+                      </div>
+                      <div className="mt-3">
+                        <Button>Book an appointment</Button>
+                      </div>
                     </div>
-                    <div className="mt-3">
-                      <Button>Book an appointment</Button>
+                  )}
+                  {this.state.aBooked && (
+                    <div className="">
+                      <div>
+                        <Button>Track your periods</Button>
+                      </div>
+                      <div className="mt-3">
+                        <Button>Book a follow up appointment</Button>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </Col>
               </Row>
             </Card>

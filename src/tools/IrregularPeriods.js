@@ -81,6 +81,7 @@ export default class IrregularPeriods extends Component {
       {
         activeFilters,
         selectedOption,
+        activeCauses: [],
       },
       () => {
         console.log(selectedOption, this.state.selectedOption);
@@ -104,6 +105,7 @@ export default class IrregularPeriods extends Component {
 
     this.setState({
       activeFilters,
+      activeCauses: [],
     });
   };
   handleSelect3 = (selectedOption3) => {
@@ -122,6 +124,7 @@ export default class IrregularPeriods extends Component {
 
     this.setState({
       activeFilters,
+      activeCauses: [],
     });
   };
   handleFilter = (f) => {

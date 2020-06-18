@@ -177,6 +177,20 @@
 .question-button:focus {
   box-shadow: none !important;
 }
+.form-control {
+  /* width: 64px !important; */
+  padding: 0.375rem 0.5rem !important;
+  color: #163948 !important;
+  border-color: #163948 !important;
+}
+.form-control:hover {
+  border-color: #163948 !important;
+  box-shadow: 0 0 0.5rem 0.04rem #163948 !important;
+}
+.filters .row {
+  padding: 2rem;
+  border-top: 2px solid #65808c;
+}
 /* Add media queries for responsiveness - when the screen is 500px wide or less, stack the links on top of each other */
 @media screen and (max-width: 500px) {
   .header a {

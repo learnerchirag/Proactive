@@ -123,7 +123,7 @@ export const Ques = [
   },
   {
     popular: false,
-    category: "Verginity",
+    category: "Virginity",
     Q: "What to keep in mind before losing virginity?",
     A:
       "Virginity means different things to different people. For some people, rupturing of hymen can mean losing virginity. And some associate their virginity with their first penetrative sex experience. However, these descriptions of virginity are not gender inclusive. First time sexual experience can be a big decision for many people. ask yourself if it’s something you want to do and communicate with your partner. If anytime during the sexual activity you feel like you don’t want to go ahead, you can always say NO. You can change your mind at any point.",

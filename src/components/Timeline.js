@@ -164,7 +164,7 @@ export default class Timeline extends Component {
                             display:
                               (value === this.props.age ||
                                 value === 41 ||
-                                value === 51) &&
+                                value === 47) &&
                               "none",
                           }}
                         >
@@ -222,7 +222,7 @@ export default class Timeline extends Component {
                       <label style={{ color: "white" }}>41</label>
                     </React.Fragment>
                   )}
-                  {value === 51 && (
+                  {value === 47 && (
                     <React.Fragment>
                       <div
                         style={{
@@ -241,7 +241,7 @@ export default class Timeline extends Component {
                           backgroundColor: "white",
                         }}
                       ></div>
-                      <label style={{ color: "white" }}>51</label>
+                      <label style={{ color: "white" }}>47</label>
                     </React.Fragment>
                   )}
                 </Col>

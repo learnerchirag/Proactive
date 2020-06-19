@@ -1,18 +1,39 @@
 import React, { Component } from "react";
 import ChatBot from "react-simple-chatbot";
 import { Ques } from "./constants/chatArray";
+import stringSimilarity from "string-similarity";
+var customQuesArray = [];
+
 class Bot extends Component {
-  // handleCategoryQues = (category) => {
-  //   console.log(category);
-  //   var allQuesArray = [];
-  //   Ques.forEach((ques) => {
-  //     if (ques.category === category) {
-  //       allQuesArray.push({ value: ques.A, label: ques.Q, trigger: "answer" });
-  //     }
-  //   });
-  //   return allQuesArray;
-  // };
+  state = {
+    customQuesArray: [],
+  };
+  componentDidMount() {
+    document.title = "Proactive ChatBot";
+  }
+  handleCustomTrigger = (value, steps) => {
+    console.log(value, steps);
+    Ques.forEach((ques) => {
+      if (stringSimilarity.compareTwoStrings(value, ques.Q) >= 0.5) {
+        customQuesArray.push({
+          value: ques.A,
+          label: ques.Q,
+          trigger: "answer",
+        });
+      }
+    });
+    console.log(customQuesArray);
+    // this.setState({
+    //   customQuesArray: customQuesArray,
+    // });
+    if (customQuesArray.length === 0) {
+      return "askElse";
+    } else {
+      return "customQuesArray";
+    }
+  };
   render() {
+    console.log(this.state.customQuesArray);
     const popQuesArray = [];
     const mastQuesArray = [];
     const orgasmQuesArray = [];
@@ -29,6 +50,11 @@ class Bot extends Component {
         value: "all questions",
         label: "All Questions",
         trigger: "allCategory",
+      },
+      {
+        value: "custom Question",
+        label: "Custom Questions",
+        trigger: "customQues",
       },
     ];
     const allCategory = [
@@ -91,7 +117,7 @@ class Bot extends Component {
       }
     });
 
-    const steps = [
+    let steps = [
       {
         id: "0",
         message: "Welcome to proactive chatbot!",
@@ -104,6 +130,12 @@ class Bot extends Component {
       {
         id: "popQues",
         options: popQuesArray,
+      },
+      {
+        id: "customQues",
+        user: true,
+        placeholder: "Enter keyword to search for your query",
+        trigger: ({ value, steps }) => this.handleCustomTrigger(value, steps),
       },
       {
         id: "allCategory",
@@ -136,6 +168,15 @@ class Bot extends Component {
         options: sshQuesArray,
       },
       {
+        id: "customQuesArray",
+        options: customQuesArray,
+      },
+      {
+        id: "askElse",
+        message: "Ask something else",
+        trigger: "1",
+      },
+      {
         id: "answer",
         message: "{previousValue}",
         trigger: "final",
@@ -155,8 +196,18 @@ class Bot extends Component {
     ];
     return (
       <div>
-        <ChatBot steps={steps}></ChatBot>
-        {/* <ReactSimpleChatbot steps={steps}></ReactSimpleChatbot> */}
+        <ChatBot
+          width="90%"
+          height="80%"
+          floating={true}
+          floatingStyle={{ background: "#163948" }}
+          headerStyle={{ background: "#163948" }}
+          footerStyle={{ position: "absolute", bottom: "0", width: "100%" }}
+          // bubbleStyle={{ background: "#163948" }}
+          bubbleOptionStyle={{ display: "block", background: "#163948" }}
+          style={{ marginLeft: "auto", marginRight: "auto" }}
+          steps={steps}
+        ></ChatBot>
       </div>
     );
   }

@@ -37,6 +37,9 @@ export default class IrregularPeriods extends Component {
     symptoms: 1,
     aBooked: false,
   };
+  componentDidMount() {
+    document.title = "Irregular Periods";
+  }
   handleQ1 = (q) => {
     this.setState({
       q1: q,
@@ -189,14 +192,16 @@ export default class IrregularPeriods extends Component {
     console.log(this.state.activeFilters);
     return (
       <Container fluid className="p-3">
-        {/* <div className="bc-tiles-wrapper mb-4">
+        <div className="bc-tiles-wrapper mb-4">
           <div className="bc-tiles-intro-text w-75 mx-auto">
             <h1 style={{ fontFamily: "montserrat" }}>Irregular Periods</h1>
             <div className="d-block">
               <p>
-                Birth control is how you prevent pregnancy. There are lots of
-                different birth control options out there. We’re here to help
-                you figure it all out.
+                Irregular menstrual cycles are not just inconvenient. Irregular
+                ovulation may be indicative of underlying conditions such as
+                PCOS, thyroid, excess prolactin, inflamed pelvic region, or
+                ovary dysfunction. Take a test to understand potential root
+                causes and have more informed discussion with your doctor.
               </p>
               <p>
                 <strong>
@@ -206,7 +211,7 @@ export default class IrregularPeriods extends Component {
               </p>
             </div>
           </div>
-        </div> */}
+        </div>
 
         <Row className="">
           <Col>

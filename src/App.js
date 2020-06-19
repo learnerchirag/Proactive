@@ -32,15 +32,18 @@ export default class App extends Component {
     return (
       <div className="App">
         <Header />
-        <Bot />
-        <HashRouter basename={process.env.PUBLIC_URL}>
+        <HashRouter basename="/">
           <Switch>
+            <Route
+              path="/tools/chat-bot"
+              render={(props) => <Bot {...props} />}
+            />
             <Route
               path="/tools/irregular-periods"
               render={(props) => <IrregularPeriods {...props} />}
             />
             <Route
-              path="/tools/modern-fertility"
+              path="/tools/fertility-timeline"
               render={(props) => <ModernFertility {...props} />}
             />
           </Switch>

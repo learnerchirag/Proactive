@@ -113,9 +113,12 @@ export default class Timeline extends Component {
                         Risk of Down Syndrome:{" "}
                         {this.state.dataArray[value].down_syndrome}
                       </UncontrolledTooltip>
-                      <UncontrolledTooltip placement="top" target="percentage">
+                      <UncontrolledTooltip
+                        placement="bottom"
+                        target={"percentage" + i}
+                      >
                         This number represents the % of women who are unable to
-                        have a child at 28. You'll notice that this number
+                        have a child at {value}. You'll notice that this number
                         increases with age.
                       </UncontrolledTooltip>
                       <div
@@ -126,7 +129,7 @@ export default class Timeline extends Component {
                           marginLeft: "-14px ",
                         }}
                       >
-                        <div id="percentage">
+                        <div id={"percentage" + i}>
                           <label style={{ color: "white" }}>
                             {this.state.dataArray[value].p_women + "%"}
                           </label>

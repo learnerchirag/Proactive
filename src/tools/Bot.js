@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import ChatBot from "react-simple-chatbot";
 import { Ques } from "./constants/chatArray";
 import stringSimilarity from "string-similarity";
-var customQuesArray = [];
+import sw from "stopword";
+import { Container } from "reactstrap";
+let customQuesArray = [];
 
 class Bot extends Component {
   state = {
@@ -12,9 +14,20 @@ class Bot extends Component {
     document.title = "Proactive ChatBot";
   }
   handleCustomTrigger = (value, steps) => {
+    customQuesArray.splice(0, customQuesArray.length);
     console.log(value, steps);
+    const swValue = sw.removeStopwords(value.split(" "));
+    console.log(swValue);
     Ques.forEach((ques) => {
-      if (stringSimilarity.compareTwoStrings(value, ques.Q) >= 0.5) {
+      const swQ = sw.removeStopwords(ques.Q.split(" "));
+      console.log(swQ);
+      if (
+        swValue.every((element) => {
+          if (swQ.includes(element)) {
+            return true;
+          } else return false;
+        })
+      ) {
         customQuesArray.push({
           value: ques.A,
           label: ques.Q,
@@ -29,6 +42,11 @@ class Bot extends Component {
     if (customQuesArray.length === 0) {
       return "askElse";
     } else {
+      customQuesArray.push({
+        value: "Go back",
+        label: "Try some other keyword",
+        trigger: "customQues",
+      });
       return "customQuesArray";
     }
   };
@@ -47,13 +65,13 @@ class Bot extends Component {
         trigger: "popQues",
       },
       {
-        value: "all questions",
-        label: "All Questions",
+        value: "all topics",
+        label: "All Topics",
         trigger: "allCategory",
       },
       {
         value: "custom Question",
-        label: "Custom Questions",
+        label: "I want to ask my own question",
         trigger: "customQues",
       },
     ];
@@ -116,11 +134,19 @@ class Bot extends Component {
         sshQuesArray.push({ value: ques.A, label: ques.Q, trigger: "answer" });
       }
     });
+    popQuesArray.push({ value: "Go back", label: "Go back", trigger: "1" });
+    allCategory.push({ value: "Go back", label: "Go back", trigger: "1" });
 
     let steps = [
       {
         id: "0",
-        message: "Welcome to proactive chatbot!",
+        message: "Hello! Welcome to Proactive Chatbot.",
+        trigger: "after-0",
+      },
+      {
+        id: "after-0",
+        message:
+          "To get quick answers to your questions, select one of the following options:",
         trigger: "1",
       },
       {
@@ -195,12 +221,13 @@ class Bot extends Component {
       },
     ];
     return (
-      <div>
+      <Container fluid style={{ height: "100%" }}>
         <ChatBot
-          width="90%"
-          height="80%"
-          floating={true}
-          floatingStyle={{ background: "#163948" }}
+          width="100%"
+          hideHeader={true}
+          botAvatar={require("../download/images/cute-cartoon-character-doctor-style_78094-187.jpg")}
+          // floating={true}
+          // floatingStyle={{ background: "#163948" }}
           headerStyle={{ background: "#163948" }}
           footerStyle={{ position: "absolute", bottom: "0", width: "100%" }}
           // bubbleStyle={{ background: "#163948" }}
@@ -208,7 +235,7 @@ class Bot extends Component {
           style={{ marginLeft: "auto", marginRight: "auto" }}
           steps={steps}
         ></ChatBot>
-      </div>
+      </Container>
     );
   }
 }

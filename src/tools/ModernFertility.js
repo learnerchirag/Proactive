@@ -11,6 +11,7 @@ import "@firebase/auth";
 import "@firebase/firestore";
 import "@firebase/storage";
 import Share from "../components/Share";
+import Header from "../components/Header";
 class ModernFertility extends Component {
   state = {
     index: 0,
@@ -35,111 +36,114 @@ class ModernFertility extends Component {
 
     return (
       <div>
-        <Container fluid className="pt-5">
-          <div className="bc-tiles-wrapper ">
-            <div className="bc-tiles-intro-text w-75 mx-auto">
-              <h1 style={{ fontFamily: "montserrat" }}>Fertility Timeline</h1>
-              <div className="d-block">
-                <p>
-                  Not ready for kids? Visualize your timeline and put structure
-                  to fertility.<br></br> Outsource your research and learn about
-                  how fertility changes with age.
-                </p>
-                <p>
-                  <strong>Build your timeline:</strong>
-                </p>
+        <Header />
+        <div>
+          <Container fluid className="pt-5">
+            <div className="bc-tiles-wrapper ">
+              <div className="bc-tiles-intro-text w-75 mx-auto">
+                <h1 style={{ fontFamily: "montserrat" }}>Fertility Timeline</h1>
+                <div className="d-block">
+                  <p>
+                    Not ready for kids? Visualize your future and plan your
+                    fertility.<br></br>
+                    Leave the research to us and learn about how fertility
+                    changes with age.
+                  </p>
+                  <p>
+                    <strong>Build your timeline:</strong>
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
-          <Row
-            className="mt-5 float-center mx-auto"
-            style={{ justifyContent: "center" }}
-          >
-            <Col md="2">
-              <Row>
-                <Col>
-                  <label>Your age</label>
-                </Col>
-                <Col>
-                  <Input
-                    min={20}
-                    type="number"
-                    name="age"
-                    value={this.state.age}
-                    onChange={this.handleInput}
-                  ></Input>
-                </Col>
-              </Row>
-            </Col>
-            <Col>
-              <FormGroup>
+            <Row
+              className="mt-5 float-center mx-auto"
+              style={{ justifyContent: "center" }}
+            >
+              <Col md="2">
                 <Row>
                   <Col>
-                    <label>
-                      Age you’d like to have your first (or next) kid
-                    </label>
+                    <label>Your age</label>
                   </Col>
                   <Col>
                     <Input
+                      min={20}
                       type="number"
-                      name="ageChild"
-                      value={this.state.ageChild}
+                      name="age"
+                      value={this.state.age}
                       onChange={this.handleInput}
                     ></Input>
                   </Col>
                 </Row>
-              </FormGroup>
-            </Col>
-            <Col>
-              <FormGroup>
+              </Col>
+              <Col>
+                <FormGroup>
+                  <Row>
+                    <Col>
+                      <label>
+                        Age you’d like to have your first (or next) kid
+                      </label>
+                    </Col>
+                    <Col>
+                      <Input
+                        type="number"
+                        name="ageChild"
+                        value={this.state.ageChild}
+                        onChange={this.handleInput}
+                      ></Input>
+                    </Col>
+                  </Row>
+                </FormGroup>
+              </Col>
+              <Col>
+                <FormGroup>
+                  <Row>
+                    <Col>
+                      <label>Number of kids you'd like</label>
+                    </Col>
+                    <Col>
+                      <Input
+                        type="number"
+                        name="kids"
+                        value={this.state.kids}
+                        onChange={this.handleInput}
+                      ></Input>
+                    </Col>
+                  </Row>
+                </FormGroup>
+              </Col>
+              <Col>
                 <Row>
                   <Col>
-                    <label>Number of kids you'd like</label>
+                    <label>Time between kids</label>
                   </Col>
                   <Col>
-                    <Input
-                      type="number"
-                      name="kids"
-                      value={this.state.kids}
-                      onChange={this.handleInput}
-                    ></Input>
+                    <InputRange
+                      maxValue={7}
+                      minValue={1}
+                      value={this.state.kidsGap}
+                      onChange={(kidsGap) => this.setState({ kidsGap })}
+                      // formatLabel={}
+                    />
+                  </Col>
+                  <Col>
+                    <h4 color="#163948" style={{ fontWeight: "bold" }}>
+                      {this.state.kidsGap + " years"}
+                    </h4>
                   </Col>
                 </Row>
-              </FormGroup>
-            </Col>
-            <Col>
-              <Row>
-                <Col>
-                  <label>Time between kids</label>
-                </Col>
-                <Col>
-                  <InputRange
-                    maxValue={7}
-                    minValue={1}
-                    value={this.state.kidsGap}
-                    onChange={(kidsGap) => this.setState({ kidsGap })}
-                    // formatLabel={}
-                  />
-                </Col>
-                <Col>
-                  <h4 color="#163948" style={{ fontWeight: "bold" }}>
-                    {this.state.kidsGap + " years"}
-                  </h4>
-                </Col>
-              </Row>
-            </Col>
-          </Row>
+              </Col>
+            </Row>
 
-          <Row>
-            <Col className="order-2 px-0">
-              <Timeline
-                age={this.state.age}
-                ageChild={ageChildProp}
-                kids={this.state.kids}
-                kidsGap={this.state.kidsGap}
-              />
-            </Col>
-            {/* <Col
+            <Row>
+              <Col className="order-2 px-0">
+                <Timeline
+                  age={this.state.age}
+                  ageChild={ageChildProp}
+                  kids={this.state.kids}
+                  kidsGap={this.state.kidsGap}
+                />
+              </Col>
+              {/* <Col
               md="4"
               className="order-1 filters"
               style={{ borderRight: "2px solid #65808c" }}
@@ -208,9 +212,10 @@ class ModernFertility extends Component {
               </Row>
             </Col>
            */}
-          </Row>
-          <Share />
-        </Container>
+            </Row>
+            <Share />
+          </Container>
+        </div>
       </div>
     );
   }

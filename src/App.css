@@ -1,6 +1,9 @@
 /* svg {
   height: 50px !important;
 } */
+body > #root > div {
+  height: 100vh;
+}
 .card {
   padding-left: 20px;
   padding-right: 20px;
@@ -156,20 +159,39 @@
 .symptoms-2:hover {
   background-color: #f3bd1a !important;
 }
+.css-2b097c-container {
+  border: 2px solid #163948 !important;
+  border-radius: 10px !important;
+}
+.css-1wa3eu0-placeholder {
+  top: 50% !important;
+}
+.css-1rhbuit-multiValue {
+  background-color: #65808c;
+}
 .causes {
-  height: 70px;
+  /* height: 70px; */
   /* padding-top: initial; */
   /* width: 130px; */
   /* margin: 1.5rem; */
-  margin-top: 2rem;
-
+  /* margin-top: 2rem; */
+  font-weight: bold;
   color: #163948;
   border-radius: 15px !important;
-  border: 2px solid #bd8f88 !important;
+  border: 3px solid #bd8f88 !important;
 }
 .causes:hover {
   background-color: #bd8f88;
 }
+#B1:hover,
+#B2:hover,
+#B3:hover,
+#B4:hover,
+#B5:hover,
+#B6:hover {
+  filter: brightness(0.5);
+}
+
 /* .question-button {
   background-color: white !important;
   color: hsl(198, 53%, 18%) !important;
@@ -191,14 +213,34 @@
   padding: 2rem;
   border-top: 2px solid #65808c;
 }
-.eDOvDv {
+/* .eDOvDv {
   background: #163948 !important;
 }
 .kATXlE {
   background: #163948 !important;
+} */
+.rsc-ts-bubble,
+.rsc-os-option-element {
+  font-size: 18px !important;
 }
-.hnAzur {
-  height: inherit !important;
+.rsc-ts-bot .rsc-ts-bubble {
+  background: #17465a !important;
+}
+.iTgONa {
+  height: calc(100% - 57px) !important;
+}
+.rsc {
+  height: 100% !important;
+}
+.rsc-container {
+  height: 100% !important;
+}
+.rsc-os-options {
+  display: grid !important;
+}
+.rsc-os-option-element {
+  text-align: inherit !important;
+  background: #17465a !important;
 }
 /* Add media queries for responsiveness - when the screen is 500px wide or less, stack the links on top of each other */
 @media screen and (max-width: 500px) {

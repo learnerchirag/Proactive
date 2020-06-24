@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
-import Filter from "./Filter";
+import SkinHair from "./SkinHair";
 import ModernFertility from "./tools/ModernFertility";
 import Header from "./components/Header";
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -32,7 +32,7 @@ export default class App extends Component {
     return (
       <div className="App">
         {/* <Header /> */}
-        <HashRouter basename="/">
+        <BrowserRouter>
           <Switch>
             <Route
               path="/tools/chat-bot"
@@ -46,8 +46,12 @@ export default class App extends Component {
               path="/tools/fertility-timeline"
               render={(props) => <ModernFertility {...props} />}
             />
+            <Route
+              path="/tools/skin-hair"
+              render={(props) => <SkinHair {...props} />}
+            />
           </Switch>
-        </HashRouter>
+        </BrowserRouter>
       </div>
     );
   }

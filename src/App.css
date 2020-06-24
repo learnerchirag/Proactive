@@ -242,6 +242,171 @@ body > #root > div {
   text-align: inherit !important;
   background: #17465a !important;
 }
+.mediaViewInfo {
+  --web-view-name: Web 1280 – 1;
+  --web-view-id: Web_1280___1;
+  --web-scale-on-resize: true;
+  --web-enable-deep-linking: true;
+}
+:root {
+  --web-view-ids: Web_1280___1;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border: none;
+}
+#Web_1280___1 {
+  position: absolute;
+  width: 966px;
+  height: 578px;
+  background-color: rgba(255, 255, 255, 1);
+  overflow: hidden;
+  --web-view-name: Web 1280 – 1;
+  --web-view-id: Web_1280___1;
+  --web-scale-on-resize: true;
+  --web-enable-deep-linking: true;
+}
+#Image_1 {
+  position: absolute;
+  width: 75px;
+  height: 62px;
+  left: 596px;
+  top: 488px;
+  overflow: visible;
+}
+#Image_4 {
+  position: absolute;
+  width: 44px;
+  height: 46px;
+  left: 612px;
+  top: 442px;
+  overflow: visible;
+}
+#Image_5 {
+  position: absolute;
+  width: 44px;
+  height: 90px;
+  left: 616px;
+  top: 339px;
+  overflow: visible;
+}
+#Image_6 {
+  position: absolute;
+  width: 181px;
+  height: 46px;
+  left: 431px;
+  top: 442px;
+  overflow: visible;
+}
+#Image_7 {
+  position: absolute;
+  width: 180px;
+  height: 46px;
+  left: 656px;
+  top: 442px;
+  overflow: visible;
+}
+#Image_8 {
+  position: absolute;
+  width: 184px;
+  height: 103px;
+  left: 432px;
+  top: 339px;
+  overflow: visible;
+}
+#Image_9 {
+  position: absolute;
+  width: 44px;
+  height: 13px;
+  left: 616px;
+  top: 429px;
+  overflow: visible;
+}
+#Image_10 {
+  position: absolute;
+  width: 177px;
+  height: 103px;
+  left: 660px;
+  top: 339px;
+  overflow: visible;
+}
+.cls-1,
+.cls-14,
+.cls-2,
+.cls-3 {
+  fill: #fff;
+}
+.cls-1,
+.cls-13,
+.cls-8 {
+  stroke: #163948;
+}
+.cls-1,
+.cls-10,
+.cls-11,
+.cls-12,
+.cls-13,
+.cls-14,
+.cls-3,
+.cls-5,
+.cls-8 {
+  stroke-miterlimit: 10;
+}
+.cls-1,
+.cls-10,
+.cls-14,
+.cls-8 {
+  stroke-width: 0.5px;
+}
+.cls-3,
+.cls-5 {
+  stroke: #163948;
+  stroke-width: 0.15px;
+}
+.cls-4 {
+  fill: #efefef;
+}
+.cls-10,
+.cls-11,
+.cls-12,
+.cls-13,
+.cls-5,
+.cls-7,
+.cls-8 {
+  fill: none;
+}
+.cls-6 {
+  fill: #d1d3d4;
+}
+.cls-9 {
+  fill: #939598;
+}
+.cls-10,
+.cls-11,
+.cls-12 {
+  stroke: #939598;
+}
+.cls-11 {
+  stroke-width: 0.25px;
+}
+.cls-13 {
+  stroke-width: 0.75px;
+}
+.cls-14 {
+  stroke: #fff;
+}
+.cls-imp:hover {
+  fill: #163948;
+  opacity: 0.5;
+}
+.skin-category {
+  border: 3px solid #163948 !important;
+  border-radius: 15px !important;
+  height: 130px;
+  max-width: 130px;
+}
 /* Add media queries for responsiveness - when the screen is 500px wide or less, stack the links on top of each other */
 @media screen and (max-width: 500px) {
   .header a {

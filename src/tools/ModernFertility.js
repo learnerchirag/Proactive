@@ -102,6 +102,8 @@ class ModernFertility extends Component {
                     </Col>
                     <Col>
                       <Input
+                        min={0}
+                        max={5}
                         type="number"
                         name="kids"
                         value={this.state.kids}

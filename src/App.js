@@ -32,7 +32,7 @@ export default class App extends Component {
     return (
       <div className="App">
         {/* <Header /> */}
-        <BrowserRouter>
+        <HashRouter basename="/">
           <Switch>
             <Route
               path="/tools/chat-bot"
@@ -51,7 +51,7 @@ export default class App extends Component {
               render={(props) => <SkinHair {...props} />}
             />
           </Switch>
-        </BrowserRouter>
+        </HashRouter>
       </div>
     );
   }

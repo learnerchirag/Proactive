@@ -26,7 +26,7 @@ export default class SkinHair extends Component {
     valDataArray: null,
   };
   componentDidMount = () => {
-    document.title = "Irregular Periods";
+    document.title = "Skin/Hair Treatment";
     var config = {
       apiKey: "AIzaSyA9GaHUYNs_pz0EfmrpQs1pEpQk5yoCHUQ",
       authDomain: "proactive-22741.firebaseapp.com",

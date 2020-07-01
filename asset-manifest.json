@@ -1,26 +1,27 @@
 {
   "files": {
-    "main.css": "/Proactive/static/css/main.258c031f.chunk.css",
-    "main.js": "/Proactive/static/js/main.abf9a2f3.chunk.js",
-    "main.js.map": "/Proactive/static/js/main.abf9a2f3.chunk.js.map",
+    "main.css": "/Proactive/static/css/main.82726628.chunk.css",
+    "main.js": "/Proactive/static/js/main.f4518f2a.chunk.js",
+    "main.js.map": "/Proactive/static/js/main.f4518f2a.chunk.js.map",
     "runtime-main.js": "/Proactive/static/js/runtime-main.22496974.js",
     "runtime-main.js.map": "/Proactive/static/js/runtime-main.22496974.js.map",
     "static/css/2.68b68acb.chunk.css": "/Proactive/static/css/2.68b68acb.chunk.css",
-    "static/js/2.eb03dab5.chunk.js": "/Proactive/static/js/2.eb03dab5.chunk.js",
-    "static/js/2.eb03dab5.chunk.js.map": "/Proactive/static/js/2.eb03dab5.chunk.js.map",
+    "static/js/2.6a50cc4d.chunk.js": "/Proactive/static/js/2.6a50cc4d.chunk.js",
+    "static/js/2.6a50cc4d.chunk.js.map": "/Proactive/static/js/2.6a50cc4d.chunk.js.map",
     "index.html": "/Proactive/index.html",
-    "precache-manifest.8770d02ea23bd31b2c34f98e464f45c5.js": "/Proactive/precache-manifest.8770d02ea23bd31b2c34f98e464f45c5.js",
+    "precache-manifest.6f7a8e74bb234b3ccc1117bf1d4c05ad.js": "/Proactive/precache-manifest.6f7a8e74bb234b3ccc1117bf1d4c05ad.js",
     "service-worker.js": "/Proactive/service-worker.js",
     "static/css/2.68b68acb.chunk.css.map": "/Proactive/static/css/2.68b68acb.chunk.css.map",
-    "static/css/main.258c031f.chunk.css.map": "/Proactive/static/css/main.258c031f.chunk.css.map",
-    "static/js/2.eb03dab5.chunk.js.LICENSE.txt": "/Proactive/static/js/2.eb03dab5.chunk.js.LICENSE.txt",
+    "static/css/main.82726628.chunk.css.map": "/Proactive/static/css/main.82726628.chunk.css.map",
+    "static/js/2.6a50cc4d.chunk.js.LICENSE.txt": "/Proactive/static/js/2.6a50cc4d.chunk.js.LICENSE.txt",
+    "static/media/bot.jpg": "/Proactive/static/media/bot.ee1b5789.jpg",
     "static/media/cute-cartoon-character-doctor-style_78094-187.jpg": "/Proactive/static/media/cute-cartoon-character-doctor-style_78094-187.faf8ed85.jpg"
   },
   "entrypoints": [
     "static/js/runtime-main.22496974.js",
     "static/css/2.68b68acb.chunk.css",
-    "static/js/2.eb03dab5.chunk.js",
-    "static/css/main.258c031f.chunk.css",
-    "static/js/main.abf9a2f3.chunk.js"
+    "static/js/2.6a50cc4d.chunk.js",
+    "static/css/main.82726628.chunk.css",
+    "static/js/main.f4518f2a.chunk.js"
   ]
 }

@@ -11,16 +11,24 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 
 export default class Share extends Component {
+  componentDidMount = () => {
+    (function(d, s, id) {
+      var js,
+        fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s);
+      js.id = id;
+      js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+      fjs.parentNode.insertBefore(js, fjs);
+    })(document, "script", "facebook-jssdk");
+  };
   render() {
     return (
       <div className="my-5">
         <div className="bc-tiles-intro-text">
           <h2>Share now</h2>
           <div className="bc-tiles-intro-details">
-            <p>
-              Share the timeline. Spread the word. Help your friends put some
-              structure to the fertility mystery
-            </p>
+            <p>Explore your symptoms. Understand your period better</p>
 
             {/* <!-- <p><strong>Pick what’s important to you to find your best birth control method:</strong></p> -->  */}
           </div>
@@ -28,12 +36,12 @@ export default class Share extends Component {
 
         <div
           className="d-flex justify-content-center mb-5"
-          data-href="http://www.proactiveforher.com/tools/fertility-timeline/"
+          // data-href="http://www.proactiveforher.com/tools/irregular-periods/"
           data-layout="button_count"
         >
           <a
             className="mx-3"
-            href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.proactiveforher.com%2Ftools%2Ffertility-timeline%2F"
+            href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.proactiveforher.com%2Ftools%2Firregular-periods%2F"
             target="_blank"
             rel="noopener"
             aria-label=""
@@ -57,7 +65,7 @@ export default class Share extends Component {
 
           <a
             className="mx-3"
-            href="https://twitter.com/share/?text=Structure%20your%20fertility%20profile.%20Follow%20your%20timeline%20at%20your%20own%20terms.%20|%20Proactive&amp;url=http%3A%2F%2Fproactiveforher.com%2Ftools%2Ffertility-timeline%2F"
+            href="https://twitter.com/share/?text=Explore%20your%20symptoms.%20Understand%20your%20period%20better.&amp;url=http%3A%2F%2Fproactiveforher.com%2Ftools%2Firregular-periods%2F"
             target="_blank"
             rel="noopener"
             aria-label=""
@@ -78,7 +86,7 @@ export default class Share extends Component {
 
           <a
             className="mx-3"
-            href="mailto:?subject=Structure%20your%20fertility%20profile.%20Follow%20your%20timeline%20at%20your%20own%20terms.%20|%20Proactive&amp;body=http%3A%2F%2Fproactiveforher.com%2Ftools%2Ffertility-timeline%2F"
+            href="mailto:?subject=Explore%20your%20symptoms.%20Understand%20your%20period%20better.&amp;body=http%3A%2F%2Fproactiveforher.com%2Ftools%2Firregular-periods%2F"
             target="_self"
             rel="noopener"
             aria-label=""
@@ -99,7 +107,7 @@ export default class Share extends Component {
 
           <a
             className="mx-3"
-            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3A%2F%2Fproactiveforher.com%2Ftools%2Ffertility-timeline%2F&amp;title=Structure%20your%20fertility%20profile.%20Follow%20your%20timeline%20at%20your%20own%20terms.&amp;summary=Proactive's%20free%20Fertility%20Timeline%20tool%20helps%20you%20visualize%20your%20conception%20timeline.%20Just%20input%20your%20age,%20when%20you%20wish%20to%20start%20and%20how%20many%20kids%20you%20want%20to%20have,%20and%20see%20how%20your%20profile%20looks%20like.&amp;source=http%3A%2F%2Fproactiveforher.com%2Ftools%2Ffertility-timeline%2F"
+            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3A%2F%2Fproactiveforher.com%2Ftools%2Firregular-periods%2F&amp;title=Explore%20your%20symptoms.%20Understand%20your%20period%20better.&amp;source=http%3A%2F%2Fproactiveforher.com%2Ftools%2Firregular-periods%2F"
             target="_blank"
             rel="noopener"
             aria-label=""
@@ -120,7 +128,7 @@ export default class Share extends Component {
 
           <a
             className="mx-3"
-            href="https://api.whatsapp.com/send?text=Structure%20your%20fertility%20profile.%20Follow%20your%20timeline%20at%20your%20own%20terms.%20|%20Proactive%20http%3A%2F%2Fproactiveforher.com%2Ftools%2Ffertility-timeline%2F"
+            href="https://api.whatsapp.com/send?text=Explore%20your%20symptoms.%20Understand%20your%20period%20better%20http%3A%2F%2Fproactiveforher.com%2Ftools%2Firregular-periods%2F"
             target="_blank"
             rel="noopener"
             aria-label=""
@@ -148,8 +156,8 @@ export default class Share extends Component {
           </div>
         </div>
         <div
-          className="fb-comments d-flex justify-content-center"
-          data-href="http://www.proactiveforher.com/tools/fertility-timeline/"
+          class="fb-comments d-flex justify-content-center"
+          data-href="http://www.proactiveforher.com/tools/irregular-periods/"
           data-numposts="5"
           data-width=""
         ></div>

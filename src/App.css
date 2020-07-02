@@ -1,6 +1,24 @@
 /* svg {
   height: 50px !important;
 } */
+a:hover {
+  text-decoration: none !important;
+}
+.header-all {
+  font-family: "montserrat", sans-serif;
+  font-size: 35px;
+  color: #163948;
+}
+.sub-header-all {
+  font-family: "montserrat", sans-serif;
+  font-size: 25px;
+}
+.detail-all {
+  font-family: "open sans";
+}
+.para-all {
+  font-family: "lora", sans-serif !important;
+}
 body > #root > div {
   height: 100vh;
 }
@@ -183,6 +201,13 @@ body > #root > div {
 .causes:hover {
   background-color: #bd8f88;
 }
+.causes small {
+  font-size: 18px;
+  color: #54595f;
+  font-family: "open sans", sans-serif;
+  line-height: 1.3rem;
+}
+
 #B1:hover,
 #B2:hover,
 #B3:hover,
@@ -401,11 +426,63 @@ body > #root > div {
   fill: #163948;
   opacity: 0.5;
 }
+g path:focus {
+  outline: none;
+}
 .skin-category {
   border: 3px solid #163948 !important;
   border-radius: 15px !important;
   height: 130px;
-  max-width: 130px;
+  width: 130px;
+}
+.skin-sub-category .card {
+  height: 100%;
+  padding: 20px;
+  text-align: center;
+  border: 3px solid #163948;
+  border-radius: 15px;
+}
+.treat-card {
+  border-radius: 23px !important;
+}
+.questioning button {
+  border: none;
+  background: none;
+  color: #163948;
+}
+.questioning button:hover {
+  background-color: #163948;
+  color: white;
+}
+/* .questioning button:active, */
+.questioning button.active {
+  background-color: #163948 !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+.questioning button:focus {
+  box-shadow: none !important;
+  background-color: white;
+  color: #163948;
+}
+
+.all:hover .line {
+  -webkit-transition: margin-left 1s ease-in-out;
+  -moz-transition: margin-left 1s ease-in-out;
+  -o-transition: margin-left 1s ease-in-out;
+  transition: margin-left 1s ease-in-out;
+
+  margin-left: 50px;
+}
+.questioning .form-control {
+  padding: 34px 20px !important;
+}
+.page-link {
+  border: none !important;
+}
+.page-item.active .page-link {
+  background-color: #163948 !important;
 }
 /* Add media queries for responsiveness - when the screen is 500px wide or less, stack the links on top of each other */
 @media screen and (max-width: 500px) {

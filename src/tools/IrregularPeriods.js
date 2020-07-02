@@ -6,6 +6,7 @@ import {
   Card,
   Button,
   Spinner,
+  Tooltip,
   UncontrolledTooltip,
 } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -35,6 +36,8 @@ import "@firebase/auth";
 import "@firebase/firestore";
 import "@firebase/storage";
 import Header from "../components/Header";
+import Share from "../components/Share";
+import { fa } from "stopword";
 // import { CSSTransition, CSSTransitionGroup } from "react-transition-group";
 export default class IrregularPeriods extends Component {
   state = {
@@ -53,6 +56,7 @@ export default class IrregularPeriods extends Component {
     aBooked: false,
     selectedOption1: null,
     dataArray: null,
+    toolTip: null,
   };
   componentDidMount() {
     document.title = "Irregular Periods";
@@ -78,22 +82,23 @@ export default class IrregularPeriods extends Component {
         this.setState({ dataArray });
       });
   }
+
   handleQ1 = (q) => {
     this.setState({
-      q1: q,
-      icon: true,
+      q1: this.state.q1 === q ? null : q,
+      icon: this.state.q1 === q ? false : true,
     });
   };
   handleQ1_1 = (q) => {
     this.setState({
-      q1_1: q,
-      icon: true,
+      q1_1: this.state.q1_1 === q ? null : q,
+      icon: this.state.q1_1 === q ? false : true,
     });
   };
   handleQ2 = (q) => {
     this.setState({
-      q2: q,
-      icon: true,
+      q2: this.state.q2 === q ? null : q,
+      icon: this.state.q2 === q ? false : true,
     });
   };
   handleQ3 = (q) => {
@@ -192,6 +197,19 @@ export default class IrregularPeriods extends Component {
           return false;
         }
       } else {
+        for (let i = 0; i < this.state.activeFilters.length; i++) {
+          const element = this.state.activeFilters[i];
+          if (array.includes(element)) {
+            if (!activeCauses.includes(cause)) {
+              activeCauses.push(cause);
+              this.setState({
+                activeCauses,
+              });
+            }
+            return true;
+          }
+        }
+
         if (this.state.activeFilters.every((val) => array.includes(val))) {
           if (!activeCauses.includes(cause)) {
             activeCauses.push(cause);
@@ -257,7 +275,7 @@ export default class IrregularPeriods extends Component {
       {
         value: "b3",
 
-        label: "Inter-menstrual Spotting",
+        label: "Bleeding Between Periods",
       },
     ];
     const options2 = [
@@ -269,22 +287,22 @@ export default class IrregularPeriods extends Component {
       { value: "n2", label: "Diarrhoea" },
     ];
     const symptomsOptions = [
-      { value: "a", label: "Painfull periods" },
+      { value: "a", label: "Painful periods" },
       { value: "b1", label: "No Bleeding" },
       { value: "b2", label: "Heavy Bleeding" },
       {
         value: "b3",
-        label: "Inter-menstrual Spotting",
+        label: "Bleeding Between Periods",
       },
       { value: "c", label: "Abnormal vaginal discharge" },
       { value: "d", label: "Vaginal dryness" },
-      { value: "e", label: "Painfull sexual intercourse" },
+      { value: "e", label: "Painful sexual intercourse" },
       { value: "f", label: "Bleeding after sex" },
       { value: "g", label: "Acne" },
       { value: "h1", label: "Weight gain" },
       { value: "h2", label: "Weight loss" },
       { value: "i", label: "Hirsutism" },
-      { value: "j", label: "Painfull urination" },
+      { value: "j", label: "Painful urination" },
       { value: "k", label: "Fever/chills" },
       { value: "l", label: "Hair loss" },
       { value: "m", label: "Dry skin" },
@@ -309,23 +327,26 @@ export default class IrregularPeriods extends Component {
     ) : (
       <div>
         <Header />
-        <Container fluid className="p-3">
+        <Container fluid className="p-3 mt-5">
           <div className="bc-tiles-wrapper mb-4">
             <div className="bc-tiles-intro-text w-75 mx-auto">
-              <h1 style={{ fontFamily: "montserrat" }}>Irregular Periods</h1>
-              <div className="d-block">
+              <h1
+                className="header-all"
+                style={{ fontFamily: "montserrat, sans-serif" }}
+              >
+                Irregular Periods
+              </h1>
+              <div className="d-block para-all">
                 <p>
-                  Irregular menstrual cycles are not just inconvenient.
-                  Irregular ovulation may be indicative of underlying conditions
-                  such as PCOS, thyroid, excess prolactin, inflamed pelvic
-                  region, or ovary dysfunction. Take a test to understand
-                  potential root causes and have more informed discussion with
-                  your doctor.
+                  Studies show that at least 14% of all women struggle with some
+                  degree of irregularity in their periods. Irregular periods may
+                  be indicative of underlying conditions such as PCOS, thyroid,
+                  excess prolactin, inflamed pelvic region, or ovary
+                  dysfunction.
                 </p>
                 <p>
                   <strong>
-                    Pick what’s important to you to find your best birth control
-                    method:
+                    We’re here to help you better understand your period.
                   </strong>
                 </p>
               </div>
@@ -334,18 +355,18 @@ export default class IrregularPeriods extends Component {
 
           <Row className="">
             <Col>
-              <Card className="text-center justify-content-center shadow border-0 px-5 py-5">
-                <h2
+              <Card className="text-center justify-content-center border-0 px-5 py-5">
+                {/* <h2
                   style={{
-                    fontFamily: "montserrat",
+                    fontFamily: "montserrat, sans-serif",
                     color: "#163948",
                     fontWeight: "bold",
                   }}
                 >
                   Do you struggle with irregular periods?
-                </h2>
-                <h5
-                  className="mx-auto mt-3"
+                </h2> */}
+                {/* <h5
+                  className="mx-auto mt-3 para-all"
                   style={{ fontFamily: "lora", maxWidth: "800px" }}
                 >
                   Studies show that at least 14% of all women struggle with some
@@ -353,7 +374,7 @@ export default class IrregularPeriods extends Component {
                   changes play a key role, there could be any number of
                   underlying causes. We’re here to help you better understand
                   your period.
-                </h5>
+                </h5> */}
                 <Row>
                   <Col>
                     <Button
@@ -396,146 +417,159 @@ export default class IrregularPeriods extends Component {
             </Col>
           </Row>
           {this.state.button === 1 && (
-            <Row className="p-3 questions">
-              <Col className="">
-                <Card
-                  className="shadow p-3"
-                  style={{ backgroundColor: "#BCD8DF" }}
-                >
-                  <h6>
-                    How would you categorize the nature of your irregularity?
-                    (Select all that apply)
-                  </h6>
+            <div>
+              <Card className="text-center mt-3 p-4 shadow border-0">
+                <div className="px-5" style={{}}>
+                  <h5 style={{ color: "#163948", fontWeight: "bold" }}>
+                    The number of days between your period, duration of
+                    bleeding, and persistence of irregularity, are key factors
+                    that help a physician get to the root of your concerns.
+                    <br></br>
+                    <br></br>
+                    Highlight the concerns you have about your period.
+                  </h5>
+                </div>
+              </Card>
+              <Row className="p-3 questions">
+                <Col className="">
                   <Card
-                    id={"1"}
-                    className="mt-4 my-2 shadow question-sub"
-                    style={{
-                      backgroundColor:
-                        this.state.q1 === "1" ? "#0d8dad" : "white",
-                      color: "#163948",
-                    }}
-                    onClick={() => {
-                      this.handleQ1("1");
-                    }}
+                    className="shadow p-3"
+                    style={{ backgroundColor: "#BCD8DF" }}
                   >
-                    <p>My periods are absent</p>
+                    <h6 className="sub-header-all">
+                      How would you categorize the nature of your irregularity?
+                      (Select all that apply)
+                    </h6>
+                    <Card
+                      id={"1"}
+                      className="mt-4 my-2 shadow question-sub"
+                      style={{
+                        backgroundColor:
+                          this.state.q1 === "1" ? "#0d8dad" : "white",
+                        color: "#163948",
+                      }}
+                      onClick={() => {
+                        this.handleQ1("1");
+                      }}
+                    >
+                      <p>My periods are absent</p>
+                    </Card>
+                    <Card
+                      id="2"
+                      className="my-2 shadow question-sub"
+                      style={{
+                        backgroundColor:
+                          this.state.q1 === "2" ? "#0d8dad" : "white",
+                        color: "#163948",
+                      }}
+                      onClick={() => {
+                        this.handleQ1("2");
+                      }}
+                    >
+                      <p>My periods are too far apart (cycle > 35 days)</p>
+                    </Card>
+                    <Card
+                      id="3"
+                      className="my-2 shadow question-sub"
+                      style={{
+                        backgroundColor:
+                          this.state.q1 === "3" ? "#0d8dad" : "white",
+                        color: "#163948",
+                      }}
+                      onClick={() => {
+                        this.handleQ1("3");
+                      }}
+                    >
+                      <p>My periods are too close (cycle {"<"} 21 days)</p>
+                    </Card>
                   </Card>
                   <Card
-                    id="2"
-                    className="my-2 shadow question-sub"
-                    style={{
-                      backgroundColor:
-                        this.state.q1 === "2" ? "#0d8dad" : "white",
-                      color: "#163948",
-                    }}
-                    onClick={() => {
-                      this.handleQ1("2");
-                    }}
+                    className="shadow p-3 mt-2"
+                    style={{ backgroundColor: "#BCD8DF" }}
                   >
-                    <p>My periods are too far apart (cycle > 35 days)</p>
+                    <h6 className="sub-header-all">Nature of flow?</h6>
+                    <Card
+                      id="4"
+                      className="mt-4 my-2 shadow question-sub"
+                      style={{
+                        backgroundColor:
+                          this.state.q1_1 === "4" ? "#0d8dad" : "white",
+                        color: "#163948",
+                      }}
+                      onClick={() => {
+                        this.handleQ1_1("4");
+                      }}
+                    >
+                      <p>Heavy flow (lasting > 7 days)</p>
+                    </Card>
+                    <Card
+                      id="5"
+                      className="my-2 shadow question-sub"
+                      style={{
+                        backgroundColor:
+                          this.state.q1_1 === "5" ? "#0d8dad" : "white",
+                        color: "#163948",
+                      }}
+                      onClick={() => {
+                        this.handleQ1_1("5");
+                      }}
+                    >
+                      <p>Extremely light flow/ irregular spotting</p>
+                    </Card>
                   </Card>
+                </Col>
+                <Col>
                   <Card
-                    id="3"
-                    className="my-2 shadow question-sub"
-                    style={{
-                      backgroundColor:
-                        this.state.q1 === "3" ? "#0d8dad" : "white",
-                      color: "#163948",
-                    }}
-                    onClick={() => {
-                      this.handleQ1("3");
-                    }}
+                    className="shadow p-3"
+                    style={{ backgroundColor: "#BCD8DF", height: "100%" }}
                   >
-                    <p>My periods are too close (cycle {"<"} 21 days)</p>
+                    <h6 className="sub-header-all">
+                      How long have you observed irregularity in your periods?
+                    </h6>
+                    <Card
+                      id={"a"}
+                      className="mt-4 my-2 shadow question-sub"
+                      style={{
+                        backgroundColor:
+                          this.state.q2 === "a" ? "#0d8dad" : "white",
+                        color: "#163948",
+                      }}
+                      onClick={() => {
+                        this.handleQ2("a");
+                      }}
+                    >
+                      <p>{"<"} 3 months</p>
+                    </Card>
+                    <Card
+                      id="b"
+                      className="my-2 shadow question-sub"
+                      style={{
+                        backgroundColor:
+                          this.state.q2 === "b" ? "#0d8dad" : "white",
+                        color: "#163948",
+                      }}
+                      onClick={() => {
+                        this.handleQ2("b");
+                      }}
+                    >
+                      <p>3-6 months</p>
+                    </Card>
+                    <Card
+                      id="c"
+                      className="my-2 shadow question-sub"
+                      style={{
+                        backgroundColor:
+                          this.state.q2 === "c" ? "#0d8dad" : "white",
+                        color: "#163948",
+                      }}
+                      onClick={() => {
+                        this.handleQ2("c");
+                      }}
+                    >
+                      <p>> 6 months</p>
+                    </Card>
                   </Card>
-                </Card>
-                <Card
-                  className="shadow p-3 mt-2"
-                  style={{ backgroundColor: "#BCD8DF" }}
-                >
-                  <h6 className="">Nature of flow?</h6>
-                  <Card
-                    id="4"
-                    className="mt-4 my-2 shadow question-sub"
-                    style={{
-                      backgroundColor:
-                        this.state.q1_1 === "4" ? "#0d8dad" : "white",
-                      color: "#163948",
-                    }}
-                    onClick={() => {
-                      this.handleQ1_1("4");
-                    }}
-                  >
-                    <p>Heavy flow (lasting > 7 days)</p>
-                  </Card>
-                  <Card
-                    id="5"
-                    className="my-2 shadow question-sub"
-                    style={{
-                      backgroundColor:
-                        this.state.q1_1 === "5" ? "#0d8dad" : "white",
-                      color: "#163948",
-                    }}
-                    onClick={() => {
-                      this.handleQ1_1("5");
-                    }}
-                  >
-                    <p>Extremely light flow/ irregular spotting</p>
-                  </Card>
-                </Card>
-              </Col>
-              <Col>
-                <Card
-                  className="shadow p-3"
-                  style={{ backgroundColor: "#BCD8DF", height: "100%" }}
-                >
-                  <h6>
-                    How long have you observed irregularity in your periods?
-                  </h6>
-                  <Card
-                    id={"a"}
-                    className="mt-4 my-2 shadow question-sub"
-                    style={{
-                      backgroundColor:
-                        this.state.q2 === "a" ? "#0d8dad" : "white",
-                      color: "#163948",
-                    }}
-                    onClick={() => {
-                      this.handleQ2("a");
-                    }}
-                  >
-                    <p>{"<"} 3 months</p>
-                  </Card>
-                  <Card
-                    id="b"
-                    className="my-2 shadow question-sub"
-                    style={{
-                      backgroundColor:
-                        this.state.q2 === "b" ? "#0d8dad" : "white",
-                      color: "#163948",
-                    }}
-                    onClick={() => {
-                      this.handleQ2("b");
-                    }}
-                  >
-                    <p>3-6 months</p>
-                  </Card>
-                  <Card
-                    id="c"
-                    className="my-2 shadow question-sub"
-                    style={{
-                      backgroundColor:
-                        this.state.q2 === "c" ? "#0d8dad" : "white",
-                      color: "#163948",
-                    }}
-                    onClick={() => {
-                      this.handleQ2("c");
-                    }}
-                  >
-                    <p>> 6 months</p>
-                  </Card>
-                </Card>
-                {/* <Card
+                  {/* <Card
                 className="shadow p-3 mt-2"
                 style={{ backgroundColor: "#BCD8DF" }}
               >
@@ -570,86 +604,89 @@ export default class IrregularPeriods extends Component {
                 </Card>
               </Card>
             */}
-              </Col>
-              <Col>
-                <Card
-                  className="shadow p-3"
-                  style={{ height: "100%", backgroundColor: "#DDADA6" }}
-                >
-                  <h6 className="text-center mx-4">
-                    Irregularity in periods may manifest in many different types
-                    and be caused by any number of factors.
-                  </h6>
-                  <div className="m-5">
-                    <div className="d-flex">
-                      <FontAwesomeIcon
-                        className="mt-1"
-                        style={{ display: this.state.q1 ? "block" : "none" }}
-                        icon={faAngleDoubleRight}
-                      />
-                      <h5 className="my-auto pl-2">
-                        {this.state.q1 === "1"
-                          ? "Amenorrhea"
-                          : this.state.q1 === "2"
-                          ? "Oligomenorrhoea"
-                          : this.state.q1 === "3"
-                          ? "Polymenorrhoea"
-                          : null}
-                      </h5>
-                    </div>
-                    <div className="d-flex">
-                      <FontAwesomeIcon
-                        className="mt-1"
-                        style={{ display: this.state.q1_1 ? "block" : "none" }}
-                        icon={faAngleDoubleRight}
-                      />
-                      <h5 className="my-auto pl-2">
-                        {this.state.q1_1 === "4"
-                          ? "Menorrhagia"
-                          : this.state.q1_1 === "5"
-                          ? "Hypomenorrhoea"
-                          : null}
-                      </h5>
-                    </div>
-                    <div className="d-flex">
-                      <FontAwesomeIcon
-                        className="mt-1"
-                        style={{ display: this.state.q2 ? "block" : "none" }}
-                        icon={faAngleDoubleRight}
-                      />
-                      <h5 className="my-auto pl-2">
-                        {this.state.q2 === "a"
-                          ? "If you experience irregularity in periods for fewer than 3 cycles, and are otherwise regular, lifestyle changes, increased stress, or an infection could all be potential causes for concern."
-                          : this.state.q2 === "b"
-                          ? " Irregularity in periods lasting greater than 3 months could have multiple underlying causes."
-                          : this.state.q2 === "c"
-                          ? " Irregularity in periods lasting greater than 3 months could have multiple underlying causes."
-                          : null}
-                      </h5>
-                    </div>
-                  </div>
-                  <Button
-                    style={{
-                      color: "white",
-                      borderColor: "white",
-                      background: "bottom",
-                      fontWeight: "bold",
-                      position: "absolute",
-                      bottom: "30px",
-                      width: "90%",
-                    }}
-                    className="mx-auto"
-                    onClick={() => {
-                      this.setState({
-                        button: 2,
-                      });
-                    }}
+                </Col>
+                <Col>
+                  <Card
+                    className="shadow p-3"
+                    style={{ height: "100%", backgroundColor: "#DDADA6" }}
                   >
-                    Explore More
-                  </Button>
-                </Card>
-              </Col>
-            </Row>
+                    <h6 className="text-center mx-4 sub-header-all">
+                      Irregularity in periods may manifest in many different
+                      types and be caused by any number of factors.
+                    </h6>
+                    <div className="m-5">
+                      <div className="d-flex">
+                        <FontAwesomeIcon
+                          className="mt-1"
+                          style={{ display: this.state.q1 ? "block" : "none" }}
+                          icon={faAngleDoubleRight}
+                        />
+                        <h5 className="my-auto pl-2">
+                          {this.state.q1 === "1"
+                            ? "Amenorrhea"
+                            : this.state.q1 === "2"
+                            ? "Oligomenorrhoea"
+                            : this.state.q1 === "3"
+                            ? "Polymenorrhoea"
+                            : null}
+                        </h5>
+                      </div>
+                      <div className="d-flex">
+                        <FontAwesomeIcon
+                          className="mt-1"
+                          style={{
+                            display: this.state.q1_1 ? "block" : "none",
+                          }}
+                          icon={faAngleDoubleRight}
+                        />
+                        <h5 className="my-auto pl-2">
+                          {this.state.q1_1 === "4"
+                            ? "Menorrhagia"
+                            : this.state.q1_1 === "5"
+                            ? "Hypomenorrhoea"
+                            : null}
+                        </h5>
+                      </div>
+                      <div className="d-flex">
+                        <FontAwesomeIcon
+                          className="mt-1"
+                          style={{ display: this.state.q2 ? "block" : "none" }}
+                          icon={faAngleDoubleRight}
+                        />
+                        <h5 className="my-auto pl-2">
+                          {this.state.q2 === "a"
+                            ? "If you experience irregularity in periods for fewer than 3 cycles, and are otherwise regular, lifestyle changes, increased stress, or an infection could all be potential causes for concern."
+                            : this.state.q2 === "b"
+                            ? " Irregularity in periods lasting greater than 3 months could have multiple underlying causes."
+                            : this.state.q2 === "c"
+                            ? " Irregularity in periods lasting greater than 3 months could have multiple underlying causes."
+                            : null}
+                        </h5>
+                      </div>
+                    </div>
+                    <Button
+                      style={{
+                        color: "#163948",
+                        borderColor: "#163948",
+                        background: "bottom",
+                        fontWeight: "bold",
+                        position: "absolute",
+                        bottom: "30px",
+                        width: "90%",
+                      }}
+                      className="mx-auto"
+                      onClick={() => {
+                        this.setState({
+                          button: 2,
+                        });
+                      }}
+                    >
+                      Explore More
+                    </Button>
+                  </Card>
+                </Col>
+              </Row>
+            </div>
           )}
           {this.state.button === 2 && (
             <div>
@@ -965,12 +1002,12 @@ export default class IrregularPeriods extends Component {
                             this.handleImageSelect([
                               {
                                 value: "b3",
-                                label: "Inter-menstrual Spotting",
+                                label: "Bleeding Between Periods",
                               },
                             ])
                           }
                         >
-                          Inter-menstrual Spotting
+                          Bleeding Between Periods
                         </Card>
                       </UncontrolledTooltip>
                       <img src={require("../download/bodyModel/B6a.png")}></img>
@@ -985,10 +1022,14 @@ export default class IrregularPeriods extends Component {
                     </div>
                   </div>
                  */}
-                  <div>
-                    <UncontrolledTooltip
+                  <div className="mt-3">
+                    <Tooltip
+                      isOpen={this.state.toolTip === 1 ? true : false}
                       placement="right"
                       target="B1"
+                      onClick={() => {
+                        this.setState({ toolTip: null });
+                      }}
                       autohide={false}
                     >
                       <Card
@@ -1011,10 +1052,14 @@ export default class IrregularPeriods extends Component {
                       >
                         Changes in mood
                       </Card>
-                    </UncontrolledTooltip>
-                    <UncontrolledTooltip
+                    </Tooltip>
+                    <Tooltip
+                      isOpen={this.state.toolTip === 2 ? true : false}
                       placement="right"
                       target="B2"
+                      onClick={() => {
+                        this.setState({ toolTip: null });
+                      }}
                       autohide={false}
                     >
                       <Card
@@ -1047,10 +1092,14 @@ export default class IrregularPeriods extends Component {
                       >
                         Dry skin
                       </Card>
-                    </UncontrolledTooltip>
-                    <UncontrolledTooltip
+                    </Tooltip>
+                    <Tooltip
+                      isOpen={this.state.toolTip === 3 ? true : false}
                       placement="right"
                       target="B3"
+                      onClick={() => {
+                        this.setState({ toolTip: null });
+                      }}
                       autohide={false}
                     >
                       <Card
@@ -1063,10 +1112,14 @@ export default class IrregularPeriods extends Component {
                       >
                         Hair loss/ thinning
                       </Card>
-                    </UncontrolledTooltip>
-                    <UncontrolledTooltip
+                    </Tooltip>
+                    <Tooltip
+                      isOpen={this.state.toolTip === 4 ? true : false}
                       placement="right"
                       target="B4"
+                      onClick={() => {
+                        this.setState({ toolTip: null });
+                      }}
                       autohide={false}
                     >
                       <Card
@@ -1079,10 +1132,14 @@ export default class IrregularPeriods extends Component {
                       >
                         Nipple discharge
                       </Card>
-                    </UncontrolledTooltip>
-                    <UncontrolledTooltip
+                    </Tooltip>
+                    <Tooltip
+                      isOpen={this.state.toolTip === 5 ? true : false}
                       placement="right"
                       target="B5"
+                      onClick={() => {
+                        this.setState({ toolTip: null });
+                      }}
                       autohide={false}
                     >
                       <Card
@@ -1109,7 +1166,7 @@ export default class IrregularPeriods extends Component {
                         style={{ color: "black" }}
                         onClick={() =>
                           this.handleImageSelect([
-                            { value: "h2", label: "Weight gain" },
+                            { value: "h1", label: "Weight gain" },
                           ])
                         }
                       >
@@ -1125,17 +1182,21 @@ export default class IrregularPeriods extends Component {
                       >
                         Weight loss
                       </Card>
-                    </UncontrolledTooltip>
-                    <UncontrolledTooltip
+                    </Tooltip>
+                    <Tooltip
+                      isOpen={this.state.toolTip === 6 ? true : false}
                       placement="right"
                       target="B6"
+                      onClick={() => {
+                        this.setState({ toolTip: null });
+                      }}
                       autohide={false}
                     >
                       <Card
                         style={{ color: "black" }}
                         onClick={() =>
                           this.handleImageSelect([
-                            { value: "1", label: "Painful periods" },
+                            { value: "a", label: "Painful periods" },
                           ])
                         }
                       >
@@ -1223,14 +1284,14 @@ export default class IrregularPeriods extends Component {
                           this.handleImageSelect([
                             {
                               value: "b3",
-                              label: "Inter-menstrual Spotting",
+                              label: "Bleeding Between Periods",
                             },
                           ])
                         }
                       >
-                        Inter-menstrual Spotting
+                        Bleeding Between Periods
                       </Card>
-                    </UncontrolledTooltip>
+                    </Tooltip>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 126.25 250.46"
@@ -1239,16 +1300,31 @@ export default class IrregularPeriods extends Component {
                       <g id="Layer_2" data-name="Layer 2">
                         <g id="Layer_1-2" data-name="Layer 1">
                           <path
+                            onClick={() => {
+                              this.setState({
+                                toolTip: this.state.toolTip !== 2 ? 2 : null,
+                              });
+                            }}
                             id="B2"
                             class="cls-1 cls-imp"
                             d="M58.46,6.22a18.47,18.47,0,0,0-6,9.78,15.68,15.68,0,0,0,.66,9.45,10.92,10.92,0,0,0,2.45,3.86,10.27,10.27,0,0,0,6.31,3.16c3.57.21,7.2-2.2,9.06-6a25.82,25.82,0,0,0,1.5-5.94c.33-2.59.62-4.84-.36-7.47A10.83,10.83,0,0,0,68.3,7.91C64.23,5,59.26,6,58.46,6.22Z"
                           />
                           <path
+                            onClick={() => {
+                              this.setState({
+                                toolTip: this.state.toolTip !== 1 ? 1 : null,
+                              });
+                            }}
                             id="B1"
                             class="cls-2 cls-imp"
                             d="M72.68,14.86A10.76,10.76,0,0,0,66.43,3.65a11.62,11.62,0,0,0-7.29-.16,11.71,11.71,0,0,0-1.74.65c-1.44,1-6.07,4.59-6.66,10.25a11.62,11.62,0,0,0,.12,3.27l20.91,0A9.12,9.12,0,0,0,72.68,14.86Z"
                           />
                           <path
+                            onClick={() => {
+                              this.setState({
+                                toolTip: this.state.toolTip !== 3 ? 3 : null,
+                              });
+                            }}
                             id="B3"
                             class="cls-1 cls-imp"
                             d="M75.79,35.08a9,9,0,0,1-.07,5.7.8.8,0,0,1-.39.46c-1,.43-3.21-2-4.36-3.68a15.19,15.19,0,0,1-2.58-7.39.22.22,0,0,0,0-.08V30a13.52,13.52,0,0,0,2.1-2.8,13,13,0,0,0,1.45-4.15c1.12-5.84,1.68-8.77,1-11.25-.15-.58-1.64-5.9-5.79-7.88a6.42,6.42,0,0,0-3.37-1c-1.37.1-2.54.85-3.73.28a2.38,2.38,0,0,1-.62-.43,1.53,1.53,0,0,1,.11-1.28C60.17.28,63.9,0,66.43.48c6.24,1.24,9.51,8.16,9.72,8.62C80.65,19,73.73,29.15,75.79,35.08Z"
@@ -1348,11 +1424,21 @@ export default class IrregularPeriods extends Component {
                             d="M92.31,188A16.9,16.9,0,0,1,76,193.21c0-.57-.08-1.13-.1-1.72-.07-2.19,0-7.27-1.63-9.12a11.69,11.69,0,0,1-1.87-2.77,10.63,10.63,0,0,1-.44-1.06,17.57,17.57,0,0,1-.61-2.42l.47-.61c5.37-6.69,13.89-3.75,16.65-2.54a34.13,34.13,0,0,0,.74,6.42C90.15,183.75,91.19,184.9,92.31,188Z"
                           />
                           <path
+                            onClick={() => {
+                              this.setState({
+                                toolTip: this.state.toolTip !== 6 ? 6 : null,
+                              });
+                            }}
                             id="B6"
                             class="cls-2 cls-imp"
                             d="M55.87,127A6.12,6.12,0,0,1,58,122.15a6.56,6.56,0,0,1,3.69-1.37,7,7,0,0,1,4.82,1.66,5.84,5.84,0,0,1,1.82,4.17,9.55,9.55,0,0,1-.16,1.59,14.11,14.11,0,0,1-.9,3.68c-.11.24-.21.46-.32.66a9.8,9.8,0,0,1-.81,1.33,5.16,5.16,0,0,1-1.69,1.83,4,4,0,0,1-2,.45,4.9,4.9,0,0,1-1.86-.37,5.81,5.81,0,0,1-1.78-1.13,8.2,8.2,0,0,1-1.1-1.21h0a10,10,0,0,1-1.41-3.18c0-.24-.11-.5-.11-.5-.05-.24-.1-.5-.14-.76A14.77,14.77,0,0,1,55.87,127Z"
                           />
                           <path
+                            onClick={() => {
+                              this.setState({
+                                toolTip: this.state.toolTip !== 5 ? 5 : null,
+                              });
+                            }}
                             id="B5"
                             class="cls-2 cls-imp"
                             d="M86.91,106H39.14a26.65,26.65,0,0,1,1.79-6.33l1.76-3.25.75-1.67c.15-.33.22-.49.29-.67a12.69,12.69,0,0,0,.92-5v-.38c0-1.3-.14-2.61-.28-3.94-.06-.66-.12-1.12-.2-1.6,0,0,0-.08,0-.12H81.43c0,.45,0,1,0,1.55,0,.22,0,.45,0,.69s0,.36,0,.56v.39c0,.79,0,1.7,0,2.72,0,.49,0,.92,0,1.32a9.1,9.1,0,0,0,.45,2.93,19,19,0,0,0,1.54,3,48.22,48.22,0,0,1,2.14,4.71A26.24,26.24,0,0,1,86.91,106Z"
@@ -1590,11 +1676,21 @@ export default class IrregularPeriods extends Component {
                             d="M68.39,37.85a4.32,4.32,0,0,0,.08.91c0,.22.09.48.16.77"
                           />
                           <path
+                            onClick={() => {
+                              this.setState({
+                                toolTip: this.state.toolTip !== 4 ? 4 : null,
+                              });
+                            }}
                             id="B4"
                             class="cls-14 cls-imp"
                             d="M58,66.25a6.86,6.86,0,0,1-.54,1.67,7.66,7.66,0,0,1-1.92,2.48,10.59,10.59,0,0,1-4.23,2.24,6.55,6.55,0,0,1-2.28.52c-2.41-.1-4.32-2.35-5.08-4.16a6.17,6.17,0,0,1-.37-1.17h0a8,8,0,0,1-.16-2.64s0-.07,0-.1a6.35,6.35,0,0,1,.3-1.3A7.89,7.89,0,0,1,45.23,61l.14-.15h0l0,0h0l.85-.71,1.46-.89a8,8,0,0,1,4.1-.48,7.88,7.88,0,0,1,4.26,2.08,6.87,6.87,0,0,1,1.73,3.08A6.34,6.34,0,0,1,58,66.25Z"
                           />
                           <path
+                            onClick={() => {
+                              this.setState({
+                                toolTip: this.state.toolTip !== 4 ? 4 : null,
+                              });
+                            }}
                             id="B4"
                             class="cls-14 cls-imp"
                             d="M67.65,66.28A6.58,6.58,0,0,0,68.22,68a7.87,7.87,0,0,0,2,2.49,9.11,9.11,0,0,0,4.47,2.26,7.75,7.75,0,0,0,5.09-.62,6.13,6.13,0,0,0,2.69-3,7,7,0,0,0,.38-1.17v0h0a7.61,7.61,0,0,0,.24-1.14,6.22,6.22,0,0,0,.08-1.56,5.44,5.44,0,0,0-.32-1.35A7.43,7.43,0,0,0,81,61,9.61,9.61,0,0,0,80,60l-1.48-.8a8.84,8.84,0,0,0-4.33-.48,8.49,8.49,0,0,0-4.5,2.09,6.74,6.74,0,0,0-1.83,3.09A6.21,6.21,0,0,0,67.65,66.28Z"
@@ -1645,7 +1741,7 @@ export default class IrregularPeriods extends Component {
                           />
                         </g>
                       </g>
-                    </svg>{" "}
+                    </svg>
                   </div>
                 </Col>
                 <Col className="pt-3 symptoms">
@@ -1686,7 +1782,7 @@ export default class IrregularPeriods extends Component {
                               : "white",
                           }}
                         >
-                          Painfull periods
+                          painful periods
                         </Card>
                       </Col>
                       <Col md="auto">
@@ -1760,7 +1856,7 @@ export default class IrregularPeriods extends Component {
                               : "white",
                           }}
                         >
-                          Painfull sexual intercourse
+                          painful sexual intercourse
                         </Card>
                       </Col>
                       <Col md="auto">
@@ -1873,7 +1969,7 @@ export default class IrregularPeriods extends Component {
                               : "white",
                           }}
                         >
-                          Painfull urination
+                          painful urination
                         </Card>
                       </Col>
                       <Col md="auto" className="d-flex">
@@ -2017,7 +2113,7 @@ export default class IrregularPeriods extends Component {
                   </Row> */}
 
                   <Card className="pt-3 pl-3 shadow" style={{ height: "100%" }}>
-                    <h6 style={{ fontWeight: "bold" }}>Underlying Causes:</h6>
+                    {/* <h6 style={{ fontWeight: "bold" }}>Underlying Causes:</h6> */}
                     <Row>
                       <Col className="py-3 text-center">
                         <h6 style={{ fontWeight: "bold" }}>
@@ -2046,12 +2142,12 @@ export default class IrregularPeriods extends Component {
                               : "white",
                           }}
                         >
-                          PCOS
+                          <div className="sub-header-all mb-3">PCOS</div>
                           {!this.handleCauses(
                             ["b1", "b2", "g", "h1", "i", "l", "p"],
                             1
                           ) && (
-                            <div className="mt-3">
+                            <div className="">
                               <small>
                                 {this.state.dataArray.PCOS.Main_Text}
                               </small>
@@ -2071,7 +2167,7 @@ export default class IrregularPeriods extends Component {
                             <div>
                               <small>{this.state.dataArray.PCOS.b2}</small>
                             </div>
-                          )}{" "}
+                          )}
                           {this.state.activeFilters.includes("b3") && (
                             <div>
                               <small>{this.state.dataArray.PCOS.b3}</small>
@@ -2172,9 +2268,11 @@ export default class IrregularPeriods extends Component {
                               : "white",
                           }}
                         >
-                          Endometriosis
+                          <div className="sub-header-all mb-3">
+                            Endometriosis
+                          </div>
                           {!this.handleCauses(["a", "b1", "b2", "e"], 2) && (
-                            <div className="mt-3">
+                            <div className="">
                               <small>
                                 {this.state.dataArray.Endometriosis.Main_Text}
                               </small>
@@ -2335,12 +2433,14 @@ export default class IrregularPeriods extends Component {
                               : "white",
                           }}
                         >
-                          Thyroidism (hypo)
+                          <div className="sub-header-all mb-3">
+                            Hypothyroidism
+                          </div>
                           {!this.handleCauses(
                             ["b1", "b2", "h1", "k", "l", "m", "n1", "p"],
                             3
                           ) && (
-                            <div className="mt-3">
+                            <div className="">
                               <small>
                                 {this.state.dataArray.Thyroidism_hypo.Main_Text}
                               </small>
@@ -2501,12 +2601,14 @@ export default class IrregularPeriods extends Component {
                               : "white",
                           }}
                         >
-                          Thyroidism (hyper)
+                          <div className="sub-header-all mb-3">
+                            Hyperthyroidism
+                          </div>
                           {!this.handleCauses(
                             ["b1", "h2", "k", "l", "n2"],
                             4
                           ) && (
-                            <div className="mt-3">
+                            <div className="">
                               <small>
                                 {this.state.dataArray.Thy_hyper.Main_Text}
                               </small>
@@ -2629,9 +2731,11 @@ export default class IrregularPeriods extends Component {
                               : "white",
                           }}
                         >
-                          Hyperprolactinemia
+                          <div className="sub-header-all mb-3">
+                            Hyperprolactinemia
+                          </div>
                           {!this.handleCauses(["b1", "b2", "o"], 5) && (
-                            <div className="mt-3">
+                            <div className="">
                               <small>
                                 {
                                   this.state.dataArray.Hyper_prolactinemia
@@ -2795,12 +2899,12 @@ export default class IrregularPeriods extends Component {
                               : "white",
                           }}
                         >
-                          PID/ STI's
+                          <div className="sub-header-all mb-3">PID/ STI's</div>
                           {!this.handleCauses(
                             ["a", "b3", "c", "e", "j", "k"],
                             6
                           ) && (
-                            <div className="mt-3">
+                            <div className="">
                               <small>
                                 {this.state.dataArray.PID.Main_Text}
                               </small>
@@ -2921,9 +3025,9 @@ export default class IrregularPeriods extends Component {
                               : "white",
                           }}
                         >
-                          POF
+                          <div className="sub-header-all mb-3">POF</div>
                           {!this.handleCauses(["b1", "d", "p"], 7) && (
-                            <div className="mt-3">
+                            <div className="">
                               <small>
                                 {this.state.dataArray.POF.Main_Text}
                               </small>
@@ -3044,12 +3148,14 @@ export default class IrregularPeriods extends Component {
                               : "white",
                           }}
                         >
-                          Uterine fibroids
+                          <div className="sub-header-all mb-3">
+                            Uterine fibroids
+                          </div>
                           {!this.handleCauses(
                             ["a", "b1", "b2", "b3", "f", "j"],
                             8
                           ) && (
-                            <div className="mt-3">
+                            <div className="">
                               <small>
                                 {
                                   this.state.dataArray.Uterine_Fibroids
@@ -3215,12 +3321,14 @@ export default class IrregularPeriods extends Component {
                               : "white",
                           }}
                         >
-                          Eating disorders
+                          <div className="sub-header-all mb-3">
+                            Eating disorders
+                          </div>
                           {!this.handleCauses(
                             ["b1", "h2", "k", "l", "p"],
                             9
                           ) && (
-                            <div className="mt-3">
+                            <div className="">
                               <small>
                                 {
                                   this.state.dataArray.Eating_Disorders
@@ -3381,9 +3489,9 @@ export default class IrregularPeriods extends Component {
                               : "white",
                           }}
                         >
-                          Stress (TBU)
+                          <div className="sub-header-all mb-3">Stress</div>
                           {!this.handleCauses(["p"], 10) && (
-                            <div className="mt-3">
+                            <div className="">
                               <small>
                                 {this.state.dataArray.Stress.Main_Text}
                               </small>
@@ -3501,9 +3609,11 @@ export default class IrregularPeriods extends Component {
                               : "white",
                           }}
                         >
-                          Drugs/contraceptives
+                          <div className="sub-header-all mb-3">
+                            Drugs/contraceptives
+                          </div>
                           {!this.handleCauses(["p"], 11) && (
-                            <div className="mt-3">
+                            <div className="">
                               <small>
                                 {this.state.dataArray.D_C.Main_Text}
                               </small>
@@ -3615,8 +3725,8 @@ export default class IrregularPeriods extends Component {
                   </Card>
                 </Col>
               </Row>
-              <Card className="shadow">
-                {/* <Row>
+
+              {/* <Row>
                   <Col className="py-3 text-center">
                     <h6 style={{ fontWeight: "bold" }}>
                       {this.state.activeCauses.length === 0
@@ -3631,153 +3741,70 @@ export default class IrregularPeriods extends Component {
                   </Col>
                 </Row> */}
 
-                <Row>
-                  {/* <Col
+              <Row className="mt-5">
+                <Col
+                  style={{
+                    display: "flex",
+                    flexFlow: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <h1
+                    className="header-all text-center mt-5"
                     style={{
-                      borderTop: "1px dashed black",
-                      display: "flex",
-                      alignItems: "flex-end",
-                      justifyContent: "center",
+                      fontFamily: "montserrat, sans-serif",
+                      fontWeight: "bold",
                     }}
                   >
-                    <Button
-                      style={{
-                        // position: "absolute",
-                        // bottom: "0",
-                        width: "90%",
-                        background: "bottom",
-                        color: "black",
-                      }}
-                    >
-                      Explore all Causes
-                    </Button>
-                  </Col>
-                  */}
-                  <Col
-                    className=""
-                    style={{
-                      backgroundColor: "#163948",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      textAlign: "center",
-                      minHeight: "500px",
-                      maxHeight: "100%",
-                    }}
-                  >
-                    {!this.state.aBooked && (
-                      <div className="">
-                        <div>
-                          <FontAwesomeIcon
-                            icon={faUserMd}
-                            style={{
-                              color: "white",
-                              fontSize: "100px",
-                            }}
-                            className="my-auto"
-                          />
-                        </div>
-                        <div className="mt-3">
-                          <Button>Book an appointment</Button>
-                        </div>
+                    Talk to a specialist
+                  </h1>
+                  <div className="detail-all">
+                    Click on the icon to book an appointment
+                  </div>
+                </Col>
+                <Col
+                  className=""
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    textAlign: "center",
+                  }}
+                >
+                  {!this.state.aBooked && (
+                    <div>
+                      <a
+                        target="_blank"
+                        href="http://www.proactiveforher.com/doctors/"
+                      >
+                        <FontAwesomeIcon
+                          icon={faUserMd}
+                          style={{
+                            color: "#bcd8df",
+                            fontSize: "200px",
+                            cursor: "pointer",
+                          }}
+                          className="my-auto"
+                        />
+                      </a>
+                    </div>
+                  )}
+                  {this.state.aBooked && (
+                    <div className="">
+                      <div>
+                        <Button>Track your periods</Button>
                       </div>
-                    )}
-                    {this.state.aBooked && (
-                      <div className="">
-                        <div>
-                          <Button>Track your periods</Button>
-                        </div>
-                        <div className="mt-3">
-                          <Button>Book a follow up appointment</Button>
-                        </div>
+                      <div className="mt-3">
+                        <Button>Book a follow up appointment</Button>
                       </div>
-                    )}
-                  </Col>
-                </Row>
-              </Card>
+                    </div>
+                  )}
+                </Col>
+              </Row>
             </div>
           )}
 
-          <div className="mt-5">
-            <div className="bc-tiles-intro-text">
-              <h2>Share now</h2>
-              <div className="bc-tiles-intro-details">
-                <p>
-                  Share the timeline. Spread the word. Help your friends put
-                  some structure to the fertility mystery
-                </p>
-
-                {/* <!-- <p><strong>Pick what’s important to you to find your best birth control method:</strong></p> -->  */}
-              </div>
-            </div>
-
-            <div className="d-flex justify-content-center">
-              <a
-                className="pl-4"
-                href="https://facebook.com/sharer/sharer.php?u=http%3A%2F%2Fproactiveforher.com%2Ftools%2Fbirth-control%2F"
-                target="_blank"
-                rel="noopener"
-                aria-label=""
-              >
-                <FontAwesomeIcon
-                  icon={faFacebookF}
-                  style={{ fontSize: "50px", color: "#475993" }}
-                />
-              </a>
-
-              <a
-                className="pl-4"
-                href="https://twitter.com/intent/tweet/?text=Share%20the%20tool.%20Spread%20the%20word.%20Help%20your%20friends%20put%20some%20structure%20to%20the%20birth%20control%20mystery!&amp;url=http%3A%2F%2Fproactiveforher.com%2Ftools%2Fbirth-control%2F"
-                target="_blank"
-                rel="noopener"
-                aria-label=""
-              >
-                <FontAwesomeIcon
-                  icon={faTwitter}
-                  style={{ fontSize: "50px", color: "#76a9ea" }}
-                />
-              </a>
-
-              <a
-                className="pl-4"
-                href="mailto:?subject=Share%20the%20tool.%20Spread%20the%20word.%20Help%20your%20friends%20put%20some%20structure%20to%20the%20birth%20control%20mystery!&amp;body=http%3A%2F%2Fproactiveforher.com%2Ftools%2Fbirth-control%2F"
-                target="_self"
-                rel="noopener"
-                aria-label=""
-              >
-                <FontAwesomeIcon
-                  icon={faEnvelope}
-                  style={{ fontSize: "50px", color: "#fdbf04" }}
-                />
-              </a>
-
-              <a
-                className="pl-4"
-                href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3A%2F%2Fproactiveforher.com%2Ftools%2Fbirth-control%2F&amp;title=Share%20the%20tool.%20Spread%20the%20word.%20Help%20your%20friends%20put%20some%20structure%20to%20the%20birth%20control%20mystery!&amp;summary=Share%20the%20tool.%20Spread%20the%20word.%20Help%20your%20friends%20put%20some%20structure%20to%20the%20birth%20control%20mystery!&amp;source=http%3A%2F%2Fproactiveforher.com%2Ftools%2Fbirth-control%2F"
-                target="_blank"
-                rel="noopener"
-                aria-label=""
-              >
-                <FontAwesomeIcon
-                  icon={faLinkedinIn}
-                  style={{ fontSize: "50px", color: "#0077b7" }}
-                />
-              </a>
-
-              <a
-                className="pl-4"
-                href="whatsapp://send?text=Share%20the%20tool.%20Spread%20the%20word.%20Help%20your%20friends%20put%20some%20structure%20to%20the%20birth%20control%20mystery!%20http%3A%2F%2Fproactiveforher.com%2Ftools%2Fbirth-control%2F"
-                target="_blank"
-                rel="noopener"
-                aria-label=""
-              >
-                <FontAwesomeIcon
-                  icon={faWhatsapp}
-                  style={{ fontSize: "50px", color: "7ad06d" }}
-                />
-              </a>
-            </div>
-          </div>
+          <Share />
         </Container>
       </div>
     );

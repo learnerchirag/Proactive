@@ -215,7 +215,7 @@ class ModernFertility extends Component {
             </Col>
            */}
             </Row>
-            <Share />
+            {/* <Share /> */}
           </Container>
         </div>
       </div>

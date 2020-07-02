@@ -8,7 +8,7 @@ export default class Header extends Component {
           <a
             href="http://www.proactiveforher.com/"
             className="logo"
-            style={{ fontFamily: "abril fatface" }}
+            style={{ fontFamily: "abril fatface, sans-serif" }}
           >
             Proactive
           </a>

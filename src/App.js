@@ -14,6 +14,7 @@ import "@firebase/database";
 import "@firebase/storage";
 import "@firebase/functions";
 import Bot from "./tools/Bot";
+import BotPro from "./tools/BotPro";
 export default class App extends Component {
   componentDidMount = async () => {
     var config = {
@@ -32,11 +33,12 @@ export default class App extends Component {
     return (
       <div className="App">
         {/* <Header /> */}
+        {/* <SkinHair /> */}
         <HashRouter basename="/">
           <Switch>
             <Route
               path="/tools/chat-bot"
-              render={(props) => <Bot {...props} />}
+              render={(props) => <BotPro {...props} />}
             />
             <Route
               path="/tools/irregular-periods"

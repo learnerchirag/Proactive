@@ -2,7 +2,14 @@ export const Ques = [
   {
     popular: true,
     category: "Masturbation",
-    Q: "Do females masturbate ? / Is it normal for females to masturbate ?",
+    Q: "Do females masturbate ?",
+    A:
+      "Masturbation is not an activity specific to a gender type. It is for everyone. It’s a personal choice. A lot of people do. Even if they don’t accept it, they’re probably doing it, We masturbate to release sexual tension, feel good and release happy hormones. It’s a completely normal thing to do. ",
+  },
+  {
+    popular: true,
+    category: "Masturbation",
+    Q: "Is it normal for females to masturbate ?",
     A:
       "Masturbation is not an activity specific to a gender type. It is for everyone. It’s a personal choice. A lot of people do. Even if they don’t accept it, they’re probably doing it, We masturbate to release sexual tension, feel good and release happy hormones. It’s a completely normal thing to do. ",
   },
@@ -117,7 +124,14 @@ export const Ques = [
   {
     popular: true,
     category: "Sex Toys",
-    Q: "Is it safe to use sex toys ? / How to use sex toys safely ?",
+    Q: "Is it safe to use sex toys ?",
+    A:
+      "Sex toys can lead to diseases like STI’s if not used responsibly. Wash your sex toys with soap and water after each use. Sharing sex toys with other people can cause STIs. Using condoms for penetrative sex toys can protect you from STIs. Putting the same sex toy, that has been in your anus, without washing into your vagina can lead to vaginitis. ",
+  },
+  {
+    popular: true,
+    category: "Sex Toys",
+    Q: "How to use sex toys safely ?",
     A:
       "Sex toys can lead to diseases like STI’s if not used responsibly. Wash your sex toys with soap and water after each use. Sharing sex toys with other people can cause STIs. Using condoms for penetrative sex toys can protect you from STIs. Putting the same sex toy, that has been in your anus, without washing into your vagina can lead to vaginitis. ",
   },
@@ -144,8 +158,16 @@ export const Ques = [
   {
     popular: true,
     category: "Sex & Sexual Hygiene",
-    Q:
-      "What happens to my body when I start having sex regularly ? /Does your body change once you start having sex regularly ?",
+    Q: "What happens to my body when I start having sex regularly ?",
+    A:
+      "Your physical appearance stays the same. There are no body changes on the outside. During sex, your boobs become firmer, vulva swells, nipples become more sensitive. But these are only temporary changes because of the sexual arousal. Your body goes back to normal after some time.",
+    A1:
+      "Vaginal walls gradually stretch over time making the experience less painful for a person. Pelvic muscles also relax over time.",
+  },
+  {
+    popular: true,
+    category: "Sex & Sexual Hygiene",
+    Q: "Does your body change once you start having sex regularly ?",
     A:
       "Your physical appearance stays the same. There are no body changes on the outside. During sex, your boobs become firmer, vulva swells, nipples become more sensitive. But these are only temporary changes because of the sexual arousal. Your body goes back to normal after some time.",
     A1:

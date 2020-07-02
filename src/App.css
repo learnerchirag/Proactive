@@ -12,6 +12,7 @@ a:hover {
 .sub-header-all {
   font-family: "montserrat", sans-serif;
   font-size: 25px;
+  color: #163948
 }
 .detail-all {
   font-family: "open sans";
@@ -483,6 +484,9 @@ g path:focus {
 }
 .page-item.active .page-link {
   background-color: #163948 !important;
+}
+.benefits .card-body {
+  padding: 1.25rem 0 !important;
 }
 /* Add media queries for responsiveness - when the screen is 500px wide or less, stack the links on top of each other */
 @media screen and (max-width: 500px) {

@@ -1,5 +1,20 @@
+import firebase from "@firebase/app";
+import "@firebase/database";
+import "@firebase/functions";
+import "@firebase/auth";
+import "@firebase/firestore";
+import "@firebase/storage";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faShoppingCart,
+  faChevronCircleRight,
+  faChevronCircleLeft,
+  faCircle
+} from "@fortawesome/free-solid-svg-icons";
+
 import React, { Component } from "react";
-import methods from "./Methods.js";
+
 import {
   Card,
   CardHeader,
@@ -14,20 +29,12 @@ import {
   Button,
   CardFooter,
 } from "reactstrap";
-import Header from "./components/Header.js";
-import firebase from "@firebase/app";
-import "@firebase/database";
-import "@firebase/functions";
-import "@firebase/auth";
-import "@firebase/firestore";
-import "@firebase/storage";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faShoppingCart,
-  faChevronCircleRight,
-  faChevronCircleLeft,
-} from "@fortawesome/free-solid-svg-icons";
+
 import ReactPaginate from "react-paginate";
+
+import methods from "./Methods.js";
+
+import Header from "./components/Header.js";
 export default class SkinHair extends Component {
   state = {
     activeFilters: [],
@@ -526,7 +533,7 @@ export default class SkinHair extends Component {
                                         display: "flex",
                                         alignItems: "center",
                                       }}
-                                    >
+                                    > 
                                       <div
                                         style={{
                                           width: "2px",
@@ -543,7 +550,11 @@ export default class SkinHair extends Component {
                                       }}
                                     >
                                       <CardBody>
-                                        <div>{card.Text_Tile_Benefits}</div>
+                                        <div className="sub-header-all">Benefits</div>
+                                        <div className="text-left">{card.Text_Tile_Benefits.split("|").map(str=>(
+                                          <div style={{display:"flex", verticalAlign:"middle"}}>
+                                            <FontAwesomeIcon style={{fontSize:"0.4rem", margin:"10px 3px 0px 0px", color:"gray"}} icon={faCircle} />{str}</div>
+                                        ))}</div>
                                       </CardBody>
                                       <div>
                                         <Button>Add to Cart</Button>
@@ -684,8 +695,12 @@ export default class SkinHair extends Component {
                                     }}
                                   >
                                     <CardBody>
-                                      <div>{card.Text_Tile_Benefits}</div>
-                                    </CardBody>
+                                        <div className="sub-header-all">Benefits</div>
+                                        <div className="text-left">{card.Text_Tile_Benefits.split("|").map(str=>(
+                                          <div style={{display:"flex", verticalAlign:"middle"}}>
+                                            <FontAwesomeIcon style={{fontSize:"0.4rem", margin:"10px 3px 0px 0px", color:"gray"}} icon={faCircle} />{str}</div>
+                                        ))}</div>
+                                      </CardBody>
                                     <div>
                                       <Button>Add to Cart</Button>
                                     </div>
@@ -863,7 +878,11 @@ export default class SkinHair extends Component {
                                       }}
                                     >
                                       <CardBody>
-                                        <div>{card.Text_Tile_Benefits}</div>
+                                        <div className="sub-header-all">Benefits</div>
+                                        <div className="text-left">{card.Text_Tile_Benefits.split("|").map(str=>(
+                                          <div style={{display:"flex", verticalAlign:"middle"}}>
+                                            <FontAwesomeIcon style={{fontSize:"0.4rem", margin:"10px 3px 0px 0px", color:"gray"}} icon={faCircle} />{str}</div>
+                                        ))}</div>
                                       </CardBody>
                                       <div>
                                         <Button>Add to Cart</Button>
@@ -934,6 +953,7 @@ export default class SkinHair extends Component {
                                       style={{
                                         borderRadius: "14px",
                                         backgroundColor: "#DDADA6",
+                                        fontSize:"0.7rem"
                                       }}
                                     >
                                       OTC
@@ -945,6 +965,7 @@ export default class SkinHair extends Component {
                                       style={{
                                         borderRadius: "14px",
                                         backgroundColor: "#DDADA6",
+                                        fontSize:"0.7rem"
                                       }}
                                     >
                                       Prescription
@@ -956,6 +977,7 @@ export default class SkinHair extends Component {
                                       style={{
                                         borderRadius: "14px",
                                         backgroundColor: "#DDADA6",
+                                        fontSize:"0.7rem"
                                       }}
                                     >
                                       Side Effects
@@ -967,6 +989,7 @@ export default class SkinHair extends Component {
                                       style={{
                                         borderRadius: "14px",
                                         backgroundColor: "#DDADA6",
+                                        fontSize:"0.7rem"
                                       }}
                                     >
                                       Doctor advice
@@ -1000,8 +1023,12 @@ export default class SkinHair extends Component {
                                     }}
                                   >
                                     <CardBody>
-                                      <div>{card.Text_Tile_Benefits}</div>
-                                    </CardBody>
+                                        <div className="sub-header-all">Benefits</div>
+                                        <div className="text-left">{card.Text_Tile_Benefits.split("|").map(str=>(
+                                          <div style={{display:"flex", verticalAlign:"middle"}}>
+                                            <FontAwesomeIcon style={{fontSize:"0.4rem", margin:"10px 3px 0px 0px", color:"gray"}} icon={faCircle} />{str}</div>
+                                        ))}</div>
+                                      </CardBody>
                                     <div>
                                       <Button>Add to Cart</Button>
                                     </div>
@@ -1109,6 +1136,7 @@ export default class SkinHair extends Component {
                                         style={{
                                           borderRadius: "14px",
                                           backgroundColor: "#DDADA6",
+                                          fontSize:"0.7rem"
                                         }}
                                       >
                                         OTC
@@ -1120,6 +1148,7 @@ export default class SkinHair extends Component {
                                         style={{
                                           borderRadius: "14px",
                                           backgroundColor: "#DDADA6",
+                                          fontSize:"0.7rem"
                                         }}
                                       >
                                         Prescription
@@ -1131,6 +1160,7 @@ export default class SkinHair extends Component {
                                         style={{
                                           borderRadius: "14px",
                                           backgroundColor: "#DDADA6",
+                                          fontSize:"0.7rem"
                                         }}
                                       >
                                         Side Effects
@@ -1142,6 +1172,7 @@ export default class SkinHair extends Component {
                                         style={{
                                           borderRadius: "14px",
                                           backgroundColor: "#DDADA6",
+                                          fontSize:"0.7rem"
                                         }}
                                       >
                                         Doctor advice
@@ -1175,7 +1206,11 @@ export default class SkinHair extends Component {
                                       }}
                                     >
                                       <CardBody>
-                                        <div>{card.Text_Tile_Benefits}</div>
+                                        <div className="sub-header-all">Benefits</div>
+                                        <div className="text-left">{card.Text_Tile_Benefits.split("|").map(str=>(
+                                          <div style={{display:"flex", verticalAlign:"middle"}}>
+                                            <FontAwesomeIcon style={{fontSize:"0.4rem", margin:"10px 3px 0px 0px", color:"gray"}} icon={faCircle} />{str}</div>
+                                        ))}</div>
                                       </CardBody>
                                       <div>
                                         <Button>Add to Cart</Button>
@@ -1246,6 +1281,7 @@ export default class SkinHair extends Component {
                                       style={{
                                         borderRadius: "14px",
                                         backgroundColor: "#DDADA6",
+                                        fontSize:"0.7rem"
                                       }}
                                     >
                                       OTC
@@ -1257,6 +1293,7 @@ export default class SkinHair extends Component {
                                       style={{
                                         borderRadius: "14px",
                                         backgroundColor: "#DDADA6",
+                                        fontSize:"0.7rem"
                                       }}
                                     >
                                       Prescription
@@ -1268,6 +1305,7 @@ export default class SkinHair extends Component {
                                       style={{
                                         borderRadius: "14px",
                                         backgroundColor: "#DDADA6",
+                                        fontSize:"0.7rem"
                                       }}
                                     >
                                       Side Effects
@@ -1279,6 +1317,7 @@ export default class SkinHair extends Component {
                                       style={{
                                         borderRadius: "14px",
                                         backgroundColor: "#DDADA6",
+                                        fontSize:"0.7rem"
                                       }}
                                     >
                                       Doctor advice
@@ -1312,8 +1351,12 @@ export default class SkinHair extends Component {
                                     }}
                                   >
                                     <CardBody>
-                                      <div>{card.Text_Tile_Benefits}</div>
-                                    </CardBody>
+                                        <div className="sub-header-all">Benefits</div>
+                                        <div className="text-left">{card.Text_Tile_Benefits.split("|").map(str=>(
+                                          <div style={{display:"flex", verticalAlign:"middle"}}>
+                                            <FontAwesomeIcon style={{fontSize:"0.4rem", margin:"10px 3px 0px 0px", color:"gray"}} icon={faCircle} />{str}</div>
+                                        ))}</div>
+                                      </CardBody>
                                     <div>
                                       <Button>Add to Cart</Button>
                                     </div>

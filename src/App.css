@@ -8,11 +8,13 @@ a:hover {
   font-family: "montserrat", sans-serif;
   font-size: 35px;
   color: #163948;
+  font-weight: bold;
 }
 .sub-header-all {
   font-family: "montserrat", sans-serif;
   font-size: 25px;
-  color: #163948
+  color: #163948;
+  font-weight: bold;
 }
 .detail-all {
   font-family: "open sans";
@@ -487,6 +489,11 @@ g path:focus {
 }
 .benefits .card-body {
   padding: 1.25rem 0 !important;
+}
+.ama-categories:hover {
+  position: relative;
+  bottom: 4px;
+  zoom: 103%;
 }
 /* Add media queries for responsiveness - when the screen is 500px wide or less, stack the links on top of each other */
 @media screen and (max-width: 500px) {

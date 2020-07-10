@@ -1,5 +1,15 @@
 import React, { Component } from "react";
-import { Row, Col, Button, Card, Container, Spinner } from "reactstrap";
+import {
+  Row,
+  Col,
+  Button,
+  Card,
+  Container,
+  Form,
+  FormGroup,
+  Input,
+  Spinner,
+} from "reactstrap";
 import firebase from "@firebase/app";
 import "@firebase/database";
 import "@firebase/functions";
@@ -12,19 +22,28 @@ import {
   faThumbsUp,
   faChevronCircleLeft,
   faChevronCircleRight,
+  faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import cogoToast from "cogo-toast";
+import Popup from "reactjs-popup";
 import ReactPaginate from "react-paginate";
+import Select from "react-select";
 export default class Ama extends Component {
   state = {
     amaData: null,
     amaDataSorted: null,
     expand: false,
     uid: null,
+    relatedArray: [],
+    appreciatedArray: [],
     activeRelate: [],
     pageCount: 0,
     selectedPage: 0,
     category: "all",
+    open: false,
+    email: "",
+    userCategory: "",
+    question: "",
   };
   componentDidMount = () => {
     document.title = "AMA Platform";
@@ -42,9 +61,10 @@ export default class Ama extends Component {
       firebase.initializeApp(config);
     }
     var database = firebase.database();
+
     database
       .ref("1u4shxt1AAvJtyHT-oI566kyLzoaUjXwyQS6WiO-rePo/Sheet1")
-      .on("value", (snapshot) => {
+      .on("value", async (snapshot) => {
         var dataArray = snapshot.val();
         var amaData = Object.values(dataArray);
         var pageCount =
@@ -59,83 +79,170 @@ export default class Ama extends Component {
             amaDataSorted[i] = amaData.slice(i * 8, i * 8 + 8);
           }
         }
+        var relatedArray = [];
+        var appreciatedArray = [];
+
+        if (firebase.auth().currentUser) {
+          await database
+            .ref("relate/" + firebase.auth().currentUser.uid)
+            .once("value", (snapshot) => {
+              if (snapshot.val()) relatedArray = Object.keys(snapshot.val());
+            });
+          await database
+            .ref("appreciate/" + firebase.auth().currentUser.uid)
+            .once("value", (snapshot) => {
+              if (snapshot.val())
+                appreciatedArray = Object.keys(snapshot.val());
+            });
+        }
         this.setState({
           pageCount,
           amaDataSorted,
+          category: "all",
+          relatedArray,
+          appreciatedArray,
         });
       });
   };
+  handleInputChange = (event) => {
+    this.setState({
+      [event.target.name]: event.target.value,
+    });
+  };
+  selectCategory = (selected) => {
+    this.setState({
+      userCategory: selected,
+    });
+  };
+  handleModal = () => {
+    this.setState({ open: true });
+  };
+  handleSubmit = async () => {
+    var database = firebase.database();
+    var provider = new firebase.auth.GoogleAuthProvider();
+    var currentUser = firebase.auth().currentUser;
+    var email;
+    var userCategory = this.state.userCategory.value;
+    var question = this.state.question;
+    if (currentUser) {
+      email = currentUser.email;
+      console.log(email, userCategory);
+      database
+        .ref("newQueries/")
+        .child(email.split("@")[0])
+        .child(userCategory)
+        .push({
+          email: email,
+          category: userCategory,
+          ques: question,
+        });
+      cogoToast.success("Your response has been recorded");
+    } else {
+      firebase
+        .auth()
+        .signInWithPopup(provider)
+        .then((result) => {
+          var token = result.credential.accessToken;
+          var user = result.user;
+          email = user.email;
+          database
+            .ref("newQueries/")
+            .child(email.split("@")[0])
+            .child(userCategory)
+            .push({
+              email: email,
+              category: userCategory,
+              ques: question,
+            });
+          cogoToast.success("Your response has been recorded");
+        })
+        .catch(function(error) {
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          var email = error.email;
+          var credential = error.credential;
+          console.log(error);
+        });
+    }
+    this.setState({ open: false });
+  };
+
   handleRelate = async (act, count, i) => {
     var provider = new firebase.auth.GoogleAuthProvider();
     var database = firebase.database();
-    var uid = firebase.auth().currentUser.uid;
-    await firebase
-      .auth()
-      .signInWithPopup(provider)
-      .then((result) => {
-        var token = result.credential.accessToken;
-        var user = result.user;
-        this.setState({ uid: user.uid }, () => {
-          console.log(uid);
-          database
-            .ref()
-            .once("value")
-            .then((snap) => {
-              var related = snap.child(act + "/" + uid + "/" + i).exists();
-              console.log(related);
-              if (related) {
-                cogoToast.error("Already liked");
-              } else {
-                database
-                  .ref(
-                    "1u4shxt1AAvJtyHT-oI566kyLzoaUjXwyQS6WiO-rePo/Sheet1/" + i
-                  )
-                  .child(act)
-                  .set(count + 1);
-                database
-                  .ref(act)
-                  .child(uid + "/" + i)
-                  .set("responded");
-                this.setState({
-                  activeRelate: [...this.state.activeRelate, i],
-                });
-              }
-            });
+    var uid;
+    if (firebase.auth().currentUser) {
+      uid = firebase.auth().currentUser.uid;
+      console.log("have user", uid);
+    } else {
+      await firebase
+        .auth()
+        .signInWithPopup(provider)
+        .then((result) => {
+          var token = result.credential.accessToken;
+          var user = result.user;
+          uid = user.uid;
+        })
+        .catch(function(error) {
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          var email = error.email;
+          var credential = error.credential;
+          console.log(error);
         });
-      })
-      .catch(function(error) {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        var email = error.email;
-        var credential = error.credential;
-        console.log(error);
-      });
+    }
+    if (firebase.auth().currentUser) {
+      database
+        .ref(act)
+        .once("value")
+        .then(async (snap) => {
+          var related = snap.child("/" + uid + "/" + i).exists();
+          console.log(related);
+          if (related) {
+            cogoToast.error("Already liked");
+          } else {
+            database
+              .ref("1u4shxt1AAvJtyHT-oI566kyLzoaUjXwyQS6WiO-rePo/Sheet1/")
+              .update({ [i + "/" + act]: count + 1 });
+            await database
+              .ref(act)
+              .child(uid + "/" + i)
+              .set("responded");
+            cogoToast.success(act + "d");
+            firebase.functions().httpsCallable("copyPetrolToSheet");
+            this.setState({
+              activeRelate: [...this.state.activeRelate, i],
+            });
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
   handlePagination = (event) => {
     this.setState({
       selectedPage: event.selected,
     });
   };
-  handleCategory = async (category) => {
+  handleCategory = (category) => {
     var amaData;
     var database = firebase.database();
     if (category !== "all") {
-      await database
+      database
         .ref("1u4shxt1AAvJtyHT-oI566kyLzoaUjXwyQS6WiO-rePo/Sheet1")
         .orderByChild("category")
         .equalTo(category)
         .on("value", (snapshot) => {
           var dataArray = snapshot.val();
           amaData = Object.values(dataArray);
-          this.setState({ amaData });
         });
     } else {
-      await database
+      database
         .ref("1u4shxt1AAvJtyHT-oI566kyLzoaUjXwyQS6WiO-rePo/Sheet1")
         .on("value", (snapshot) => {
           var dataArray = snapshot.val();
           amaData = Object.values(dataArray);
-          this.setState({ amaData });
         });
     }
 
@@ -155,10 +262,25 @@ export default class Ama extends Component {
         pageCount,
         amaDataSorted,
         category,
+        selectedPage: 0,
       });
     }
   };
   render() {
+    var categoryOptions = [
+      {
+        value: "Hair & skin",
+        label: "Hair & skin",
+      },
+      { value: "Irregular periods", label: "Irregular periods" },
+      { value: "Weight gain", label: "Weight gain" },
+      { value: "Mental health", label: "Mental health" },
+      { value: "PCOS", label: "PCOS" },
+      { value: "STI", label: "STI" },
+      { value: "Fertility", label: "Fertility" },
+      { value: "Birth control", label: "Birth control" },
+      { value: "Sex education", label: "Sex education" },
+    ];
     return this.state.amaDataSorted === null ? (
       <Spinner
         style={{
@@ -194,7 +316,168 @@ export default class Ama extends Component {
               </div>
             </div>
           </div>
-
+          <Row>
+            <Col md="auto my-3 mx-auto">
+              <Button
+                onClick={this.handleModal}
+                style={{
+                  paddingBottom: "7px",
+                  borderColor: "#163948",
+                  backgroundColor: "#F3BD1A",
+                  color: "#163948",
+                  fontSize: "1.2rem",
+                }}
+              >
+                Ask Question
+              </Button>
+              <Popup
+                open={this.state.open}
+                modal
+                closeOnDocumentClick
+                onClose={() =>
+                  this.setState({
+                    open: false,
+                  })
+                }
+              >
+                <div className="py-2 px-5">
+                  <div
+                    className="sub-header-all text-center mb-3"
+                    style={{
+                      fontSize: "18px",
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    <div>
+                      Join Proactive to get updates on latest content and tools
+                      for women's healthcare approved by top physicians.
+                    </div>
+                    <FontAwesomeIcon
+                      icon={faTimes}
+                      className="ml-3"
+                      onClick={() =>
+                        this.setState({
+                          open: false,
+                        })
+                      }
+                      cursor="pointer"
+                    />
+                  </div>
+                  <Form>
+                    {/* <div className="p-lg-4">
+                      <Row>
+                        <Col>
+                          <FormGroup>
+                            <Row>
+                              <Col>
+                                <label className="form-control-label">
+                                  Email
+                                  <div>
+                                    <small>
+                                      * to be displayed as share title in every
+                                      post
+                                    </small>
+                                  </div>
+                                </label>
+                              </Col>
+                              <Col>
+                                <Input
+                                  className="form-control-alternative"
+                                  value={this.state.email}
+                                  name="email"
+                                  onChange={this.handleInputChange}
+                                  placeholder="xyz@gmail.com"
+                                  type="text"
+                                ></Input>
+                              </Col>
+                            </Row>
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                    </div> */}
+                    <div>
+                      <Card>
+                        <div>
+                          <FormGroup className="text-left">
+                            <Row>
+                              <Col>
+                                <label className="form-control-label">
+                                  Category
+                                  <div>
+                                    <small>
+                                      * please classify the question in a health
+                                      category.
+                                    </small>
+                                  </div>
+                                </label>
+                              </Col>
+                              <Col>
+                                <Select
+                                  className="form-control-alternative"
+                                  options={categoryOptions}
+                                  value={this.state.userCategory}
+                                  name="userCategory"
+                                  onChange={this.selectCategory}
+                                  placeholder="Choose a category"
+                                ></Select>
+                              </Col>
+                            </Row>
+                          </FormGroup>
+                        </div>
+                        <div>
+                          <FormGroup className="text-left">
+                            <Row>
+                              <Col>
+                                <label className="form-control-label">
+                                  Your question
+                                  <div>
+                                    <small>
+                                      * please enter your question in 1 or 2
+                                      sentences.
+                                    </small>
+                                  </div>
+                                </label>
+                              </Col>
+                              <Col>
+                                <Input
+                                  className="form-control-alternative"
+                                  value={this.state.question}
+                                  name="question"
+                                  onChange={this.handleInputChange}
+                                  placeholder="Enter text"
+                                  type="textarea"
+                                  rows={6}
+                                ></Input>
+                              </Col>
+                            </Row>
+                          </FormGroup>
+                        </div>
+                      </Card>
+                    </div>
+                    <div className="text-center">
+                      <Input
+                        className="mt-2"
+                        color="primary"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          this.handleSubmit();
+                        }}
+                        type="button"
+                        value="Submit"
+                      />
+                      <div>
+                        <small>
+                          * please sign in with google account to post your
+                          question to our physicians.
+                        </small>
+                      </div>
+                    </div>
+                  </Form>
+                </div>
+              </Popup>
+            </Col>
+          </Row>
           <Row className="mx-5 my-5">
             <Col md="auto">
               <div className="my-3">
@@ -322,6 +605,13 @@ export default class Ama extends Component {
                       {"Relate (" + item.relate + ")"}
                       <FontAwesomeIcon
                         className="ml-2"
+                        color={
+                          this.state.relatedArray.includes(item.Sr.toString())
+                            ? "#163948"
+                            : "gray"
+                        }
+                        style={{ borderColor: "black" }}
+                        fill="#163948"
                         icon={faThumbsUp}
                         onClick={() =>
                           this.handleRelate("relate", item.relate, item.Sr)
@@ -335,7 +625,15 @@ export default class Ama extends Component {
                       <div>
                         <img src={item.docprofile} />
                       </div>
-                      <div>{item.doc_name}</div>
+                      <div>
+                        <a
+                          href="http://www.proactiveforher.com/doctors/"
+                          target="_blank"
+                          style={{ color: "black", fontWeight: "bold" }}
+                        >
+                          {item.doc_name}
+                        </a>
+                      </div>
                     </Col>
                     <Col>{item.ans}</Col>
                   </Row>
@@ -343,7 +641,11 @@ export default class Ama extends Component {
                     {"Appreciate (" + item.appreciate + ")"}
                     <img
                       className="ml-2"
-                      src={require("../download/images/clap.png")}
+                      src={
+                        this.state.appreciatedArray.includes(item.Sr.toString())
+                          ? require("../download/images/clapping.png")
+                          : require("../download/images/clap.png")
+                      }
                       onClick={() =>
                         this.handleRelate(
                           "appreciate",
@@ -380,9 +682,6 @@ export default class Ama extends Component {
                   ></ReactPaginate>
                 </Col>
               </Row>
-            </Col>
-            <Col md="auto my-3">
-              <Button>Ask Question</Button>
             </Col>
           </Row>
         </Container>

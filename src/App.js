@@ -22,9 +22,10 @@ export default class App extends Component {
       <div className="App">
         {/* <Header /> */}
         {/* <SkinHair /> */}
-        <Ama />
-        <HashRouter basename="/">
+        {/* <Ama /> */}
+        <BrowserRouter>
           <Switch>
+            <Route path="/forum" render={(props) => <Ama {...props} />} />
             <Route
               path="/tools/chat-bot"
               render={(props) => <BotPro {...props} />}
@@ -42,7 +43,7 @@ export default class App extends Component {
               render={(props) => <SkinHair {...props} />}
             />
           </Switch>
-        </HashRouter>
+        </BrowserRouter>
       </div>
     );
   }

@@ -4,6 +4,7 @@
 a:hover {
   text-decoration: none !important;
 }
+
 .header-all {
   font-family: "montserrat", sans-serif;
   font-size: 35px;
@@ -63,16 +64,16 @@ body > #root > div {
   font-size: 18px;
   line-height: 25px;
   color: white;
-  font-weight: 700;
+  font-weight: 400;
   font-family: "Montserrat", Sans-serif;
 }
 
 /* Style the logo link (notice that we set the same value of line-height and font-size to prevent the header to increase when the font gets bigger */
 .header a.logo {
-  font-size: 32px;
-  font-weight: 600;
+  font-size: 40px;
+  font-weight: 500;
   color: white;
-  font-family: "Abril Fatface", Sans-serif;
+  font-family: "Abril fatface", Sans-serif;
   letter-spacing: 5px;
   margin-left: 10%;
 }
@@ -87,7 +88,7 @@ body > #root > div {
 
 /* Float the link section to the right */
 .header-right {
-  float: right;
+  justify-content: flex-end;
   margin-right: 10%;
 }
 .bc-tiles-intro-text {
@@ -95,6 +96,7 @@ body > #root > div {
   justify-content: center;
   padding-right: 1.1764705882rem;
   padding-left: 1.1764705882rem;
+  width: 100%;
 }
 .bc-tiles-intro-text h1,
 .bc-tiles-intro-text h2 {
@@ -495,11 +497,31 @@ g path:focus {
   bottom: 4px;
   zoom: 103%;
 }
+.popup-overlay {
+  overflow-y: scroll;
+}
+.user-img {
+  height: 50px;
+}
+.cat-mob {
+  display: none;
+}
+.modal-btn:hover {
+  background-color: white !important;
+  color: #163948 !important;
+  border-color: #163948 !important;
+}
 @media screen and (max-width: 1500px) {
   .sh-tags .col {
     font-size: 0.5rem !important;
   }
 }
+@media screen and (max-width: 1000px) {
+  .skin-sub-category-row {
+    padding: 40px !important;
+  }
+}
+
 /* Add media queries for responsiveness - when the screen is 500px wide or less, stack the links on top of each other */
 @media screen and (max-width: 500px) {
   .header a {
@@ -507,7 +529,57 @@ g path:focus {
     display: block;
     text-align: left;
   }
+  .header a.logo {
+    margin-left: 0;
+    padding-left: 0;
+  }
   .header-right {
     float: none;
+  }
+  .bc-tiles-intro-text {
+    width: 100% !important;
+    padding: 0em;
+    text-align: center;
+  }
+  .bc-tiles-wrapper {
+    padding: 0em;
+  }
+  .popup-content {
+    width: 95% !important;
+  }
+  .user-img {
+    height: 50px;
+  }
+  .cat-desk {
+    display: none;
+  }
+  .cat-mob {
+    display: inline-block;
+  }
+  .cat-sel-option__menu {
+    display: list-item !important;
+    background-color: white !important;
+    color: #163948 !important;
+  }
+  .cat-sel-option__control {
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    background-color: #ddada6 !important;
+  }
+  .cat-sel-container {
+    border: none !important;
+  }
+  .chatting,
+  .questioning {
+    width: 95% !important;
+  }
+  .skin-category {
+    height: auto;
+    width: auto;
+    padding: 10px;
+  }
+  .skin-sub-category-row {
+    padding: 0 !important;
   }
 }

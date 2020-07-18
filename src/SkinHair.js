@@ -35,6 +35,10 @@ import ReactPaginate from "react-paginate";
 import methods from "./Methods.js";
 
 import Header from "./components/Header.js";
+import FooterMain from "./components/FooterMain.js";
+import Share from "./components/Share.js";
+import CTA from "./components/CTA.js";
+import Modal from "./components/Modal.js";
 export default class SkinHair extends Component {
   state = {
     activeFilters: [],
@@ -187,6 +191,7 @@ export default class SkinHair extends Component {
   render() {
     return (
       <>
+        <Modal />
         {this.state.valDataArray === null ||
         this.state.hairArray === null ||
         this.state.hirsArray === null ? (
@@ -204,10 +209,13 @@ export default class SkinHair extends Component {
         ) : (
           <div>
             <Header />
-            <Container fluid className="p-3 mt-5">
+            <Container fluid className="p-3 pt-5 mt-5">
               <div className="bc-tiles-wrapper mb-4">
-                <div className="bc-tiles-intro-text w-75 mx-auto">
-                  <h1 style={{ fontFamily: "montserrat" }}>
+                <div className="bc-tiles-intro-text mx-auto">
+                  <h1
+                    className="header-all"
+                    style={{ fontFamily: "montserrat" }}
+                  >
                     Hair & Skin Treatments
                   </h1>
                   <div className="d-block">
@@ -235,7 +243,7 @@ export default class SkinHair extends Component {
                     justifyContent: "center",
                     alignItems: "center",
                   }}
-                  md="2"
+                  className="col-auto"
                 >
                   <Card
                     onClick={() => {
@@ -258,7 +266,7 @@ export default class SkinHair extends Component {
                     justifyContent: "center",
                     alignItems: "center",
                   }}
-                  md="2"
+                  className="col-auto"
                 >
                   <Card
                     onClick={() => {
@@ -285,7 +293,7 @@ export default class SkinHair extends Component {
                     justifyContent: "center",
                     alignItems: "center",
                   }}
-                  md="2"
+                  className="col-auto"
                 >
                   <Card
                     onClick={() => {
@@ -307,8 +315,11 @@ export default class SkinHair extends Component {
                   </Card>
                 </Col>
               </Row>
-              <Row className="mt-5" style={{ padding: "0px 200px" }}>
-                <Col className="skin-sub-category">
+              <Row
+                className="skin-sub-category-row mt-5"
+                style={{ padding: "0px 200px" }}
+              >
+                <Col xl="2" lg="4" className="mt-2 skin-sub-category">
                   <Card
                     style={{
                       backgroundColor:
@@ -327,7 +338,7 @@ export default class SkinHair extends Component {
                     Topical
                   </Card>
                 </Col>
-                <Col className="skin-sub-category">
+                <Col xl="2" lg="4" className="mt-2 skin-sub-category">
                   <Card
                     style={{
                       backgroundColor:
@@ -342,7 +353,7 @@ export default class SkinHair extends Component {
                     Oral
                   </Card>
                 </Col>
-                <Col className="skin-sub-category">
+                <Col xl="2" lg="4" className="mt-2 skin-sub-category">
                   <Card
                     style={{
                       backgroundColor:
@@ -361,7 +372,7 @@ export default class SkinHair extends Component {
                     Cosmetic
                   </Card>
                 </Col>
-                <Col className="skin-sub-category">
+                <Col xl="2" lg="4" className="mt-2 skin-sub-category">
                   <Card
                     style={{
                       backgroundColor:
@@ -376,7 +387,7 @@ export default class SkinHair extends Component {
                     Diet
                   </Card>
                 </Col>
-                <Col className="skin-sub-category">
+                <Col xl="2" lg="4" className="mt-2 skin-sub-category">
                   <Card
                     style={{
                       backgroundColor:
@@ -395,7 +406,7 @@ export default class SkinHair extends Component {
                     Therapy
                   </Card>
                 </Col>
-                <Col className="skin-sub-category">
+                <Col xl="2" lg="4" className="mt-2 skin-sub-category">
                   <Card
                     style={{
                       backgroundColor:
@@ -422,7 +433,10 @@ export default class SkinHair extends Component {
                       this.state.finalValDataArray[this.state.selectedPage].map(
                         (card) => (
                           <Col
-                            md={this.state.activeCard === card.Name ? "8" : "4"}
+                            md={
+                              this.state.activeCard === card.Name ? "12" : "6"
+                            }
+                            lg={this.state.activeCard === card.Name ? "8" : "4"}
                             xl={this.state.activeCard === card.Name ? "6" : "3"}
                             className="my-3 text-center"
                             style={{
@@ -591,7 +605,8 @@ export default class SkinHair extends Component {
                     {this.state.subCategory &&
                       this.state.valDataArray.map((card) => (
                         <Col
-                          md={this.state.activeCard === card.Name ? "8" : "4"}
+                          md={this.state.activeCard === card.Name ? "12" : "6"}
+                          lg={this.state.activeCard === card.Name ? "8" : "4"}
                           xl={this.state.activeCard === card.Name ? "6" : "3"}
                           className="my-3 text-center"
                           style={{
@@ -792,7 +807,10 @@ export default class SkinHair extends Component {
                       this.state.finalHairArray[this.state.selectedPage].map(
                         (card) => (
                           <Col
-                            md={this.state.activeCard === card.Name ? "8" : "4"}
+                            md={
+                              this.state.activeCard === card.Name ? "12" : "6"
+                            }
+                            lg={this.state.activeCard === card.Name ? "8" : "4"}
                             xl={this.state.activeCard === card.Name ? "6" : "3"}
                             className="my-3 text-center"
                             style={{
@@ -961,7 +979,8 @@ export default class SkinHair extends Component {
                     {this.state.subCategory &&
                       this.state.hairArray.map((card) => (
                         <Col
-                          md={this.state.activeCard === card.Name ? "8" : "4"}
+                          md={this.state.activeCard === card.Name ? "12" : "6"}
+                          lg={this.state.activeCard === card.Name ? "8" : "4"}
                           xl={this.state.activeCard === card.Name ? "6" : "3"}
                           className="my-3 text-center"
                           style={{
@@ -1162,7 +1181,10 @@ export default class SkinHair extends Component {
                       this.state.finalHirsArray[this.state.selectedPage].map(
                         (card) => (
                           <Col
-                            md={this.state.activeCard === card.Name ? "8" : "4"}
+                            md={
+                              this.state.activeCard === card.Name ? "12" : "6"
+                            }
+                            lg={this.state.activeCard === card.Name ? "8" : "4"}
                             xl={this.state.activeCard === card.Name ? "6" : "3"}
                             className="my-3 text-center"
                             style={{
@@ -1331,7 +1353,8 @@ export default class SkinHair extends Component {
                     {this.state.subCategory &&
                       this.state.hirsArray.map((card) => (
                         <Col
-                          md={this.state.activeCard === card.Name ? "8" : "4"}
+                          md={this.state.activeCard === card.Name ? "12" : "6"}
+                          lg={this.state.activeCard === card.Name ? "8" : "4"}
                           xl={this.state.activeCard === card.Name ? "6" : "3"}
                           className="my-3 text-center"
                           style={{
@@ -1525,14 +1548,26 @@ export default class SkinHair extends Component {
                   )}
                 </div>
               )}
-            </Container>
-            <div style={{ position: "fixed", bottom: 0 }}>
-              <FontAwesomeIcon
-                style={{ color: "#163948" }}
-                icon={faShoppingCart}
-                size="3x"
+              <CTA />
+              <Share
+                fbH={
+                  "https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.proactiveforher.com%2Ftools%2Fskin-hair%2F"
+                }
+                twH={
+                  "https://twitter.com/share/?text=Explore%20and%20understand%20treatment%20options%20for%20acne%2C%20hirsutism%2C%20hair%20loss.&url=http%3A%2F%2Fproactiveforher.com%2Ftools%2Fskin-hair%2F"
+                }
+                emH={
+                  "mailto:?subject=Explore%20and%20understand%20treatment%20options%20for%20acne%2C%20hirsutism%2C%20hair%20loss.&body=http%3A%2F%2Fproactiveforher.com%2Ftools%2Fskin-hair%2F"
+                }
+                liH={
+                  "https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3A%2F%2Fproactiveforher.com%2Ftools%2Fskin-hair%2F&amp;title=Explore%20and%20understand%20treatment%20options%20for%20acne%2C%20hirsutism%2C%20hair%20loss.&amp;source=http%3A%2F%2Fproactiveforher.com%2Ftools%2Fskin-hair%2F"
+                }
+                whH={
+                  "https://api.whatsapp.com/send?text=Explore%20and%20understand%20treatment%20options%20for%20acne%2C%20hirsutism%2C%20hair%20loss.%20http%3A%2F%2Fproactiveforher.com%2Ftools%2Fskin-hair%2F"
+                }
               />
-            </div>
+            </Container>
+            <FooterMain />
           </div>
         )}
       </>

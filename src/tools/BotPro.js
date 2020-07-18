@@ -101,8 +101,17 @@ export default class BotPro extends Component {
       <>
         {!this.state.chatting && (
           <div
-            className="questioning"
-            style={{ padding: "50px 0px 0px 200px" }}
+            className="questioning shadow pl-2 pt-2"
+            style={{
+              // padding: "50px 0px 0px 200px",
+              width: "30%",
+              height: "100%",
+              position: "fixed",
+              bottom: 0,
+              right: "15px",
+              zIndex: 1,
+              background: "white",
+            }}
           >
             <Row className="mx-0">
               <Col>
@@ -123,7 +132,14 @@ export default class BotPro extends Component {
                 ></Input>
               </Col>
               {this.state.custom.length !== 0 && (
-                <Col>
+                <Col
+                  md="auto"
+                  style={{
+                    display: "flex",
+                    flexFlow: "column",
+                    justifyContent: "center",
+                  }}
+                >
                   <Button onClick={this.handleCustom}>Ask</Button>
                 </Col>
               )}
@@ -210,6 +226,7 @@ export default class BotPro extends Component {
 
             <TabContent
               activeTab={this.state.activeTab}
+              style={{ height: "-webkit-fill-available", overflowY: "scroll" }}
               // style={{ margin: "20px 200px 10px 200px" }}
             >
               <TabPane tabId={1}>
@@ -218,6 +235,7 @@ export default class BotPro extends Component {
                     ques.popular && (
                       <div>
                         <Button
+                          className="text-left"
                           onClick={() => this.handleChatting(ques.Q, ques.A)}
                         >
                           {ques.Q}
@@ -229,7 +247,10 @@ export default class BotPro extends Component {
               <TabPane tabId={2}>
                 {categories.map((category) => (
                   <div>
-                    <Button onClick={() => this.handleCategory(category)}>
+                    <Button
+                      className="text-left"
+                      onClick={() => this.handleCategory(category)}
+                    >
                       {category}
                     </Button>
                   </div>
@@ -241,6 +262,7 @@ export default class BotPro extends Component {
                     ques.category === this.state.activeCategory && (
                       <div>
                         <Button
+                          className="text-left"
                           onClick={() => this.handleChatting(ques.Q, ques.A)}
                         >
                           {ques.Q}
@@ -252,7 +274,10 @@ export default class BotPro extends Component {
               <TabPane tabId={4}>
                 {this.state.filteredQuestions.map((ques) => (
                   <div>
-                    <Button onClick={() => this.handleChatting(ques.Q, ques.A)}>
+                    <Button
+                      className="text-left"
+                      onClick={() => this.handleChatting(ques.Q, ques.A)}
+                    >
                       {ques.Q}
                     </Button>
                   </div>
@@ -263,14 +288,18 @@ export default class BotPro extends Component {
         )}
         {this.state.chatting && (
           <div
+            className="chatting shadow pt-2"
             style={{
               display: "flex",
               flexFlow: "column",
               height: "100%",
               justifyContent: "flex-end",
-              width: "100%",
-              marginLeft: "auto",
-              marginRight: "auto",
+              width: "30%",
+              position: "fixed",
+              bottom: 0,
+              right: "15px",
+              zIndex: 1,
+              background: "white",
             }}
           >
             <div
@@ -279,8 +308,8 @@ export default class BotPro extends Component {
               style={{
                 maxHeight: "calc(100% - 87px)",
                 overflowY: "scroll",
-                padding: "0px 200px",
-                fontSize: "1.2rem",
+                // padding: "0px 200px",
+                fontSize: "0.9rem",
               }}
             >
               {this.state.chattingArray.map((entry, i) =>
@@ -288,12 +317,13 @@ export default class BotPro extends Component {
                   <div
                     style={{
                       textAlign: "left",
-                      maxWidth: "40%",
+                      maxWidth: "80%",
                       marginLeft: "initial",
+                      marginTop: "2px",
                     }}
                   >
                     <Card
-                      className="shadow py-3"
+                      className="shadow py-1"
                       style={{
                         backgroundColor: "#163948",
                         color: "white",
@@ -308,8 +338,9 @@ export default class BotPro extends Component {
                   <div
                     style={{
                       textAlign: "right",
-                      maxWidth: "40%",
+                      maxWidth: "80%",
                       marginLeft: "auto",
+                      marginTop: "2px",
                     }}
                   >
                     <Card
@@ -328,23 +359,26 @@ export default class BotPro extends Component {
               )}
             </div>
             <Row className="mx-0 my-2">
-              <Col style={{ padding: "0px 100px", display: "flex" }}>
+              <Col style={{ /* padding: "0px 100px",*/ display: "flex" }}>
                 <img
                   src={require("../download/images/bot.jpg")}
-                  height="100px"
+                  height="50px"
                 />
                 <Button
                   style={{
                     width: "60%",
                     backgroundColor: "white",
                     color: "#163948",
-                    fontSize: "1.5rem",
+                    fontSize: "0.9rem",
                     borderRadius: "50px",
                     textAlign: "left",
                   }}
-                  className="py-3 pl-5"
                   onClick={() =>
-                    this.setState({ chatting: false, custom: "", activeTab: 1 })
+                    this.setState({
+                      chatting: false,
+                      custom: "",
+                      activeTab: 1,
+                    })
                   }
                 >
                   Ask me anything

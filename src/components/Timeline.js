@@ -94,11 +94,14 @@ export default class Timeline extends Component {
             {age[0] > 19 ? (
               age.map((value, i) => (
                 <Col
-                  md="auto"
+                  xs="auto"
                   style={{
                     textAlign: "center",
                     paddingRight: "25px",
-                    paddingLeftL: "25px",
+                    paddingLeft: "25px",
+                    display: "flex",
+                    flexFlow: "column",
+                    justifyContent: "flex-end",
                   }}
                 >
                   {this.props.ageChild.includes(value) && (
@@ -124,9 +127,10 @@ export default class Timeline extends Component {
                       <div
                         className=""
                         style={{
-                          marginTop: "2.6rem",
+                          // marginTop: "2.6rem",
                           position: "absolute",
                           marginLeft: "-14px ",
+                          // transform: "translateY(36%)",
                         }}
                       >
                         <div id={"percentage" + i}>
@@ -159,16 +163,21 @@ export default class Timeline extends Component {
                             width: "2px",
                             height: "10px",
                             backgroundColor: "white",
+                            visibility:
+                              (value === this.props.age ||
+                                value === 41 ||
+                                value === 47) &&
+                              "hidden",
                           }}
                         ></div>
                         <label
                           style={{
                             color: "white",
-                            display:
+                            visibility:
                               (value === this.props.age ||
                                 value === 41 ||
                                 value === 47) &&
-                              "none",
+                              "hidden",
                           }}
                         >
                           {value}

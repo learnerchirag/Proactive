@@ -26,7 +26,7 @@ export default class Share extends Component {
     return (
       <div className="my-5">
         <div className="bc-tiles-intro-text">
-          <h2>Share now</h2>
+          <h2 className="header-all">Share now</h2>
           <div className="bc-tiles-intro-details">
             <p>Explore your symptoms. Understand your period better</p>
 
@@ -41,7 +41,7 @@ export default class Share extends Component {
         >
           <a
             className="mx-3"
-            href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.proactiveforher.com%2Ftools%2Firregular-periods%2F"
+            href={this.props.fbH}
             target="_blank"
             rel="noopener"
             aria-label=""
@@ -65,7 +65,7 @@ export default class Share extends Component {
 
           <a
             className="mx-3"
-            href="https://twitter.com/share/?text=Explore%20your%20symptoms.%20Understand%20your%20period%20better.&amp;url=http%3A%2F%2Fproactiveforher.com%2Ftools%2Firregular-periods%2F"
+            href={this.props.twH}
             target="_blank"
             rel="noopener"
             aria-label=""
@@ -86,7 +86,7 @@ export default class Share extends Component {
 
           <a
             className="mx-3"
-            href="mailto:?subject=Explore%20your%20symptoms.%20Understand%20your%20period%20better.&amp;body=http%3A%2F%2Fproactiveforher.com%2Ftools%2Firregular-periods%2F"
+            href={this.props.emH}
             target="_self"
             rel="noopener"
             aria-label=""
@@ -107,7 +107,7 @@ export default class Share extends Component {
 
           <a
             className="mx-3"
-            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3A%2F%2Fproactiveforher.com%2Ftools%2Firregular-periods%2F&amp;title=Explore%20your%20symptoms.%20Understand%20your%20period%20better.&amp;source=http%3A%2F%2Fproactiveforher.com%2Ftools%2Firregular-periods%2F"
+            href={this.props.liH}
             target="_blank"
             rel="noopener"
             aria-label=""
@@ -128,7 +128,7 @@ export default class Share extends Component {
 
           <a
             className="mx-3"
-            href="https://api.whatsapp.com/send?text=Explore%20your%20symptoms.%20Understand%20your%20period%20better%20http%3A%2F%2Fproactiveforher.com%2Ftools%2Firregular-periods%2F"
+            href={this.props.whH}
             target="_blank"
             rel="noopener"
             aria-label=""
@@ -148,7 +148,7 @@ export default class Share extends Component {
           </a>
         </div>
         <div className="bc-tiles-intro-text my-5">
-          <h2>Comment</h2>
+          <h2 className="header-all">Comment</h2>
           <div className="bc-tiles-intro-details">
             <p>Share anything you would like to say</p>
 

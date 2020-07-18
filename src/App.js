@@ -16,6 +16,7 @@ import "@firebase/functions";
 import Bot from "./tools/Bot";
 import BotPro from "./tools/BotPro";
 import Ama from "./tools/Ama";
+import FooterMain from "./components/FooterMain";
 export default class App extends Component {
   render() {
     return (
@@ -23,6 +24,7 @@ export default class App extends Component {
         {/* <Header /> */}
         {/* <SkinHair /> */}
         {/* <Ama /> */}
+        {/* <FooterMain /> */}
         <BrowserRouter>
           <Switch>
             <Route path="/forum" render={(props) => <Ama {...props} />} />

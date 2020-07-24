@@ -591,9 +591,6 @@ export default class SkinHair extends Component {
                                           ))}
                                         </div>
                                       </CardBody>
-                                      <div>
-                                        <Button>Add to Cart</Button>
-                                      </div>
                                     </Col>
                                   </React.Fragment>
                                 )}
@@ -758,9 +755,6 @@ export default class SkinHair extends Component {
                                         )}
                                       </div>
                                     </CardBody>
-                                    <div>
-                                      <Button>Add to Cart</Button>
-                                    </div>
                                   </Col>
                                 </React.Fragment>
                               )}
@@ -965,9 +959,6 @@ export default class SkinHair extends Component {
                                           ))}
                                         </div>
                                       </CardBody>
-                                      <div>
-                                        <Button>Add to Cart</Button>
-                                      </div>
                                     </Col>
                                   </React.Fragment>
                                 )}
@@ -1132,9 +1123,6 @@ export default class SkinHair extends Component {
                                         )}
                                       </div>
                                     </CardBody>
-                                    <div>
-                                      <Button>Add to Cart</Button>
-                                    </div>
                                   </Col>
                                 </React.Fragment>
                               )}
@@ -1339,9 +1327,6 @@ export default class SkinHair extends Component {
                                           ))}
                                         </div>
                                       </CardBody>
-                                      <div>
-                                        <Button>Add to Cart</Button>
-                                      </div>
                                     </Col>
                                   </React.Fragment>
                                 )}
@@ -1506,9 +1491,6 @@ export default class SkinHair extends Component {
                                         )}
                                       </div>
                                     </CardBody>
-                                    <div>
-                                      <Button>Add to Cart</Button>
-                                    </div>
                                   </Col>
                                 </React.Fragment>
                               )}

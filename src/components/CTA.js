@@ -10,7 +10,7 @@ export default class CTA extends Component {
   render() {
     return (
       <div>
-        <Row className="mt-5">
+        <Row className="mt-5 mx-5">
           <Col
             md="6"
             className="my-3"
@@ -32,8 +32,15 @@ export default class CTA extends Component {
             </h1>
             <div className="text-center">
               Schedule a 1:1 consultation with a helpful and open-minded
-              physician, hand-picked by Proactive.<br></br>
-              Click on the icon to book an appointment
+              physician, hand-picked by Proactive.
+            </div>
+            <div>
+              <Button
+                className="modal-btn my-2"
+                style={{ color: "white", backgroundColor: "#163948" }}
+              >
+                Book an appointment
+              </Button>
             </div>
           </Col>
           <Col

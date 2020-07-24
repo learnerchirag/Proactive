@@ -19,6 +19,8 @@ import "@firebase/storage";
 import Header from "../components/Header";
 import Modal from "../components/Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import GoogleLogin from "react-google-login";
+
 import {
   faThumbsUp,
   faChevronCircleLeft,
@@ -53,6 +55,7 @@ export default class Ama extends Component {
   };
   componentDidMount = async () => {
     document.title = "AMA Platform";
+
     var config = {
       apiKey: "AIzaSyA9GaHUYNs_pz0EfmrpQs1pEpQk5yoCHUQ",
       authDomain: "proactive-22741.firebaseapp.com",
@@ -128,10 +131,25 @@ export default class Ama extends Component {
   handleModal = () => {
     this.setState({ open: true });
   };
-  handleSubmit = async () => {
+  // checkSigin = () => {
+  //   window.gapi.signin2.render("g-signin2", {
+  //     scope: "https://www.googleapis.com/auth/plus.login",
+  //     width: 200,
+  //     height: 50,
+  //     longtitle: true,
+  //     theme: "dark",
+  //     onsuccess: this.handleSubmit,
+  //   });
+  //   window.gapi.load();
+  // };
+  handleSubmit = async (user) => {
+    console.log(user);
+
     var database = firebase.database();
-    var provider = new firebase.auth.GoogleAuthProvider();
     var currentUser = firebase.auth().currentUser;
+    var accessToken;
+    var idToken;
+    var provider = new firebase.auth.GoogleAuthProvider();
     var newDate = new Date();
     var date =
       newDate.getDate() +
@@ -164,63 +182,67 @@ export default class Ama extends Component {
       cogoToast.success("Your response has been recorded");
       this.setState({ open: false, question: "", userCategory: "" });
     } else {
-      firebase
-        .auth()
-        .signInWithPopup(provider)
-        .then((result) => {
-          var token = result.credential.accessToken;
-          var user = result.user;
-          email = user.email;
-          name = user.displayName;
-          database
-            .ref("newQueries/")
-            .child(email.split("@")[0])
-            .child(userCategory)
-            .push({
-              b: email,
-              d: userCategory,
-              e: question,
-              c: name,
-              a: date,
+      window.gapi.auth2.authorize(
+        {
+          client_id:
+            "711969593255-ssebm8569qukfl31ssjtu9n0ge4u4mi6.apps.googleusercontent.com",
+          scope: "email profile openid",
+          response_type: "id_token permission",
+        },
+        (response) => {
+          if (response.error) {
+            // An error happened!
+            console.log(response);
+            return;
+          }
+          // The user authorized the application for the scopes requested.
+          accessToken = response.access_token;
+          idToken = response.id_token;
+          console.log(idToken, accessToken);
+          // You can also now use gapi.client to perform authenticated requests.
+          firebase
+            .auth()
+            .signInWithCredential(provider.credential(idToken, accessToken))
+            .then((result) => {
+              var token = result.credential.accessToken;
+              var user = result.user;
+              email = user.email;
+              name = user.displayName;
+              database
+                .ref("newQueries/")
+                .child(email.split("@")[0])
+                .child(userCategory)
+                .push({
+                  b: email,
+                  d: userCategory,
+                  e: question,
+                  c: name,
+                  a: date,
+                });
+              cogoToast.success("Your response has been recorded");
+              this.setState({ open: false, question: "", userCategory: "" });
+            })
+            .catch(function(error) {
+              var errorCode = error.code;
+              var errorMessage = error.message;
+              var email = error.email;
+              var credential = error.credential;
+              console.log(error);
             });
-          cogoToast.success("Your response has been recorded");
-          this.setState({ open: false, question: "", userCategory: "" });
-        })
-        .catch(function(error) {
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          var email = error.email;
-          var credential = error.credential;
-          console.log(error);
-        });
+        }
+      );
     }
   };
 
   handleRelate = async (act, count, i) => {
+    var idToken;
+    var accessToken;
     var provider = new firebase.auth.GoogleAuthProvider();
     var database = firebase.database();
     var uid;
     if (firebase.auth().currentUser) {
       uid = firebase.auth().currentUser.uid;
       console.log("have user", uid);
-    } else {
-      await firebase
-        .auth()
-        .signInWithPopup(provider)
-        .then((result) => {
-          var token = result.credential.accessToken;
-          var user = result.user;
-          uid = user.uid;
-        })
-        .catch(function(error) {
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          var email = error.email;
-          var credential = error.credential;
-          console.log(error);
-        });
-    }
-    if (firebase.auth().currentUser) {
       database
         .ref(act)
         .once("value")
@@ -258,6 +280,101 @@ export default class Ama extends Component {
         .catch((error) => {
           console.log(error);
         });
+    } else {
+      // window.gapi.load("auth2", function() {
+      //   console.log("f-running");
+      //   /* Ready. Make a call to gapi.auth2.init or some other API */
+      //   window.gapi.auth2
+      //     .init({
+      //       client_id:
+      //         "711969593255-ssebm8569qukfl31ssjtu9n0ge4u4mi6.apps.googleusercontent.com",
+      //     })
+      //     .then((res) => {
+      //       console.log(res);
+      //     });
+      // });
+      // window.gapi.client
+      //   .init({
+      //     apiKey: "YOUR_API_KEY",
+      //     clientId:
+      //       "711969593255-ssebm8569qukfl31ssjtu9n0ge4u4mi6.apps.googleusercontent.com",
+      //     scope: "https://www.googleapis.com/auth/drive.metadata.readonly",
+      //     discoveryDocs: [
+      //       "https://www.googleapis.com/discovery/v1/apis/drive/v3/rest",
+      //     ],
+      //   })
+      //   .then(() => {
+      //     var googleAuth = window.gapi.auth2.getAuthInstance();
+      //     console.log(googleAuth);
+      //   });
+      // window.gapi.auth2.authorize(
+      //   {
+      //     client_id:
+      //       "711969593255-ssebm8569qukfl31ssjtu9n0ge4u4mi6.apps.googleusercontent.com",
+      //     scope: "email profile openid",
+      //     response_type: "id_token permission",
+      //   },
+      //   (response) => {
+      //     if (response.error) {
+      //       console.log(response);
+      //       return;
+      //     } else {
+      //       accessToken = response.access_token;
+      //       idToken = response.id_token;
+      //       console.log(idToken, accessToken);
+      //       firebase
+      //         .auth()
+      //         .signInWithCredential(provider.credential(idToken, accessToken))
+      //         .then((result) => {
+      //           var token = result.credential.accessToken;
+      //           var user = result.user;
+      //           uid = user.uid;
+      //           database
+      //             .ref(act)
+      //             .once("value")
+      //             .then(async (snap) => {
+      //               var related = snap.child("/" + uid + "/" + i).exists();
+      //               console.log(related);
+      //               if (related) {
+      //                 cogoToast.error("Already " + act + "d");
+      //               } else {
+      //                 database
+      //                   .ref(
+      //                     "1u4shxt1AAvJtyHT-oI566kyLzoaUjXwyQS6WiO-rePo/Sheet1/"
+      //                   )
+      //                   .update({ [i + "/" + act]: count + 1 });
+      //                 await database
+      //                   .ref(act)
+      //                   .child(uid + "/" + i)
+      //                   .set("responded");
+      //                 cogoToast.success(act + "d");
+      //                 console.log(
+      //                   i,
+      //                   this.state.appreciatedArray,
+      //                   this.state.relatedArray
+      //                 );
+      //                 if (act === "relate") {
+      //                   console.log("relat");
+      //                   this.setState({
+      //                     relatedArray: [...this.state.relatedArray, i],
+      //                   });
+      //                 } else {
+      //                   this.setState({
+      //                     appreciatedArray: [...this.state.appreciatedArray, i],
+      //                   });
+      //                 }
+      //               }
+      //             })
+      //             .catch((error) => {
+      //               console.log(error);
+      //             });
+      //         })
+      //         .catch(function(error) {
+      //           console.log(error);
+      //         });
+      //     }
+      //   }
+      // );
     }
   };
   handlePagination = (event) => {
@@ -533,7 +650,7 @@ export default class Ama extends Component {
                         </div>
                         <div className="text-center">
                           <div
-                            className="mt-2"
+                            className="mt-2 g-signin"
                             color="primary"
                             onClick={(e) => {
                               e.preventDefault();
@@ -556,6 +673,26 @@ export default class Ama extends Component {
                             </small>
                           </div>
                         </div>
+                        {/* <GoogleLogin
+                          clientId="711969593255-v3vbsb97ck4a4vbkm44qjpqpljsapjha.apps.googleusercontent.com"
+                          buttonText="Submit"
+                          render={(renderProps) => (
+                            <Button
+                              disabled={renderProps.disabled}
+                              onClick={renderProps.onClick}
+                              style={{
+                                backgroundColor: "#163948",
+                                color: "white",
+                              }}
+                            >
+                              Submit
+                            </Button>
+                          )}
+                          onSuccess={this.handleSubmit}
+                          onFailure={this.handleSubmit}
+                          cookiePolicy={"single_host_origin"}
+                        />
+                        {document.getElementById("googleButton")} */}
                       </Form>
                     </div>
                   </Popup>
@@ -860,12 +997,6 @@ export default class Ama extends Component {
                                             var link =
                                               "https://drive.google.com/uc?export=view&id=" +
                                               dp.slice(32, 65);
-
-                                            console.log(
-                                              dp,
-                                              dp.slice(32, 65),
-                                              link
-                                            );
                                             return link;
                                           } else return "";
                                         })

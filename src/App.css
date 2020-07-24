@@ -437,8 +437,8 @@ g path:focus {
 .skin-category {
   border: 3px solid #163948 !important;
   border-radius: 15px !important;
-  height: 130px;
-  width: 130px;
+  height: auto;
+  width: 100%;
 }
 .skin-sub-category .card {
   height: 100%;
@@ -511,6 +511,9 @@ g path:focus {
   color: #163948 !important;
   border-color: #163948 !important;
 }
+.scroll-timeline {
+  display: none;
+}
 @media screen and (max-width: 1500px) {
   .sh-tags .col {
     font-size: 0.5rem !important;
@@ -581,5 +584,8 @@ g path:focus {
   }
   .skin-sub-category-row {
     padding: 0 !important;
+  }
+  .scroll-timeline {
+    display: block;
   }
 }

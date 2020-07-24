@@ -84,7 +84,12 @@ export default class Timeline extends Component {
           }}
         >
           <div className="text-center mb-5" style={{ color: "white" }}>
-            <small>Hover on objects to learn more about the Timeline</small>
+            <small>
+              Hover or click on objects to learn more about the Timeline
+            </small>
+            <small className="scroll-timeline" style={{ fontSize: "14px" }}>
+              (Scroll right to view entire Timeline)
+            </small>
           </div>
           <Row style={{ minWidth: "max-content" }}>
             <div

@@ -26,25 +26,25 @@ export default class App extends Component {
         {/* <Ama /> */}
         {/* <FooterMain /> */}
         <BrowserRouter>
-          <Switch>
-            <Route path="/forum" render={(props) => <Ama {...props} />} />
-            <Route
+          {/* <Switch> */}
+          <Route path="/forum" render={(props) => <Ama {...props} />} />
+          {/* <Route
               path="/tools/chat-bot"
               render={(props) => <BotPro {...props} />}
-            />
-            <Route
-              path="/tools/irregular-periods"
-              render={(props) => <IrregularPeriods {...props} />}
-            />
-            <Route
-              path="/tools/fertility-timeline"
-              render={(props) => <ModernFertility {...props} />}
-            />
-            <Route
-              path="/tools/skin-hair"
-              render={(props) => <SkinHair {...props} />}
-            />
-          </Switch>
+            /> */}
+          {/* <Route
+            path="/tools/irregular-periods"
+            render={(props) => <IrregularPeriods {...props} />}
+          /> */}
+          {/* <Route
+            path="/tools/fertility-timeline"
+            render={(props) => <ModernFertility {...props} />}
+          /> */}
+          {/* <Route
+            path="/tools/skin-hair"
+            render={(props) => <SkinHair {...props} />}
+          /> */}
+          {/* </Switch> */}
         </BrowserRouter>
       </div>
     );

@@ -28,7 +28,10 @@ export default class Share extends Component {
         <div className="bc-tiles-intro-text">
           <h2 className="header-all">Share now</h2>
           <div className="bc-tiles-intro-details">
-            <p>Explore your symptoms. Understand your period better</p>
+            <p>
+              Explore and understand treatment options for acne, hirsutism, hair
+              loss.
+            </p>
 
             {/* <!-- <p><strong>Pick what’s important to you to find your best birth control method:</strong></p> -->  */}
           </div>
@@ -157,7 +160,7 @@ export default class Share extends Component {
         </div>
         <div
           class="fb-comments d-flex justify-content-center"
-          data-href="http://www.proactiveforher.com/tools/irregular-periods/"
+          data-href="http://www.proactiveforher.com/tools/skin-hair/"
           data-numposts="5"
           data-width=""
         ></div>

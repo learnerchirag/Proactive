@@ -42,7 +42,7 @@ export default class BotPro extends Component {
     if (event.target.value.length > 0) {
       for (let i = 0; i < questions.length; i++) {
         const element = questions[i];
-        if (element.includes(event.target.value.toLowerCase())) {
+        if (element.toLowerCase().includes(event.target.value.toLowerCase())) {
           filteredQuestions.push({ Q: element, A: Ques[i].A });
         }
       }
@@ -111,6 +111,8 @@ export default class BotPro extends Component {
               right: "15px",
               zIndex: 1,
               background: "white",
+              display: "flex",
+              flexFlow: "column",
             }}
           >
             <Row className="mx-0">
@@ -226,7 +228,7 @@ export default class BotPro extends Component {
 
             <TabContent
               activeTab={this.state.activeTab}
-              style={{ height: "-webkit-fill-available", overflowY: "scroll" }}
+              style={{ overflowY: "scroll" }}
               // style={{ margin: "20px 200px 10px 200px" }}
             >
               <TabPane tabId={1}>

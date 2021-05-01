@@ -55,7 +55,38 @@ export default class Ama extends Component {
   };
   componentDidMount = async () => {
     document.title = "AMA Platform";
+    window.fbAsyncInit = function() {
+      window.FB.init({
+        appId: "745222249628398",
+        cookie: true,
+        xfbml: true,
+        version: "v7.0",
+      });
+      window.FB.Event.subscribe("auth.logout", function(response) {
+        console.log(response);
+        window.FB.logout(function() {});
+      });
+      window.FB.getLoginStatus(async (response) => {
+        console.log(response);
+        if (response.status === "unknown") {
+          await firebase.auth().signOut();
+        }
+      });
 
+      window.FB.AppEvents.logPageView();
+    };
+
+    (function(d, s, id) {
+      var js,
+        fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) {
+        return;
+      }
+      js = d.createElement(s);
+      js.id = id;
+      js.src = "https://connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    })(document, "script", "facebook-jssdk");
     var config = {
       apiKey: "AIzaSyA9GaHUYNs_pz0EfmrpQs1pEpQk5yoCHUQ",
       authDomain: "proactive-22741.firebaseapp.com",
@@ -149,7 +180,7 @@ export default class Ama extends Component {
     var currentUser = firebase.auth().currentUser;
     var accessToken;
     var idToken;
-    var provider = new firebase.auth.GoogleAuthProvider();
+    var provider = new firebase.auth.FacebookAuthProvider();
     var newDate = new Date();
     var date =
       newDate.getDate() +
@@ -158,19 +189,27 @@ export default class Ama extends Component {
       "/" +
       newDate.getFullYear();
     console.log(date);
-    var email;
+    var email = this.state.email;
     var name;
     var userCategory = this.state.userCategory.value;
     var question = this.state.question;
-    if (userCategory === null || question.length === 0) {
+    if (userCategory === null || question.length === 0 || email.length === 0) {
       cogoToast.error("All fields required");
     } else if (currentUser) {
-      email = currentUser.email;
+      // email = currentUser.email;
       name = currentUser.displayName;
       console.log(email, userCategory);
       database
         .ref("newQueries/")
-        .child(email.split("@")[0])
+        .child(
+          email
+            .split("@")[0]
+            .replace(".", "")
+            .replace("#", "")
+            .replace("$", "")
+            .replace("[", "")
+            .replace("]", "")
+        )
         .child(userCategory)
         .push({
           b: email,
@@ -182,31 +221,44 @@ export default class Ama extends Component {
       cogoToast.success("Your response has been recorded");
       this.setState({ open: false, question: "", userCategory: "" });
     } else {
-      window.gapi.auth2.authorize(
-        {
-          client_id:
-            "711969593255-ssebm8569qukfl31ssjtu9n0ge4u4mi6.apps.googleusercontent.com",
-          scope: "email profile openid",
-          response_type: "id_token permission",
-        },
-        (response) => {
-          if (response.error) {
-            // An error happened!
-            console.log(response);
-            return;
-          }
-          // The user authorized the application for the scopes requested.
-          accessToken = response.access_token;
-          idToken = response.id_token;
-          console.log(idToken, accessToken);
-          // You can also now use gapi.client to perform authenticated requests.
+      // window.gapi.load("auth2", function() {
+      //   window.gapi.auth2
+      //     .getAuthInstance()
+      //     .signIn()
+      //     .then((res) => {
+      //       console.log(res);
+      //     });
+      // window.gapi.auth2
+      //   .init({
+      //     client_id:
+      //       "711969593255-ssebm8569qukfl31ssjtu9n0ge4u4mi6.apps.googleusercontent.com",
+      //     apiKey: "AIzaSyA9GaHUYNs_pz0EfmrpQs1pEpQk5yoCHUQ",
+      //     scope: "email profile openid",
+      //   })
+      //   .then((res) => {
+      //     console.log(res);
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //   });
+      // });
+      window.FB.getLoginStatus((response) => {
+        // window.FB.login();
+        console.log(response, firebase.auth().currentUser);
+        if (response.status === "connected") {
+          console.log(response.authResponse.accessToken);
           firebase
             .auth()
-            .signInWithCredential(provider.credential(idToken, accessToken))
+            .signInWithCredential(
+              provider.credential({
+                accessToken: response.authResponse.accessToken,
+              })
+            )
             .then((result) => {
-              var token = result.credential.accessToken;
               var user = result.user;
-              email = user.email;
+              var relatedArray = [];
+              var appreciatedArray = [];
+              // email = user.email;
               name = user.displayName;
               database
                 .ref("newQueries/")
@@ -219,6 +271,20 @@ export default class Ama extends Component {
                   c: name,
                   a: date,
                 });
+              database
+                .ref("relate/" + firebase.auth().currentUser.uid)
+                .on("value", (snapshot) => {
+                  if (snapshot.val())
+                    relatedArray = Object.keys(snapshot.val());
+                  this.setState({ relatedArray });
+                });
+              database
+                .ref("appreciate/" + firebase.auth().currentUser.uid)
+                .on("value", (snapshot) => {
+                  if (snapshot.val())
+                    appreciatedArray = Object.keys(snapshot.val());
+                  this.setState({ appreciatedArray });
+                });
               cogoToast.success("Your response has been recorded");
               this.setState({ open: false, question: "", userCategory: "" });
             })
@@ -229,20 +295,54 @@ export default class Ama extends Component {
               var credential = error.credential;
               console.log(error);
             });
-        }
-      );
+        } else
+          window.FB.login(
+            () => {
+              this.handleSubmit();
+            },
+            {
+              scope: "email",
+              return_scopes: true,
+              enable_profile_selector: true,
+            }
+          );
+      });
+      // window.gapi.load("auth2", function() {
+      //   window.gapi.auth2.authorize(
+      //     {
+      //       client_id:
+      //         "711969593255-ssebm8569qukfl31ssjtu9n0ge4u4mi6.apps.googleusercontent.com",
+      //       scope: "email profile openid",
+      //       response_type: "id_token permission",
+      //     },
+      //     (response) => {
+      //       if (response.error) {
+      //         // An error happened!
+      //         console.log(response);
+      //         return;
+      //       }
+      //       // The user authorized the application for the scopes requested.
+      //       accessToken = response.access_token;
+      //       idToken = response.id_token;
+      //       console.log(idToken, accessToken);
+      //       // You can also now use gapi.client to perform authenticated requests.
+      //     }
+      //   );
+      // });
     }
   };
 
   handleRelate = async (act, count, i) => {
     var idToken;
     var accessToken;
-    var provider = new firebase.auth.GoogleAuthProvider();
+    var provider = new firebase.auth.FacebookAuthProvider();
+    provider.addScope("email");
     var database = firebase.database();
     var uid;
+
     if (firebase.auth().currentUser) {
       uid = firebase.auth().currentUser.uid;
-      console.log("have user", uid);
+      console.log("have user", firebase.auth().currentUser);
       database
         .ref(act)
         .once("value")
@@ -281,32 +381,94 @@ export default class Ama extends Component {
           console.log(error);
         });
     } else {
-      // window.gapi.load("auth2", function() {
-      //   console.log("f-running");
-      //   /* Ready. Make a call to gapi.auth2.init or some other API */
-      //   window.gapi.auth2
-      //     .init({
-      //       client_id:
-      //         "711969593255-ssebm8569qukfl31ssjtu9n0ge4u4mi6.apps.googleusercontent.com",
-      //     })
-      //     .then((res) => {
-      //       console.log(res);
-      //     });
-      // });
-      // window.gapi.client
-      //   .init({
-      //     apiKey: "YOUR_API_KEY",
-      //     clientId:
-      //       "711969593255-ssebm8569qukfl31ssjtu9n0ge4u4mi6.apps.googleusercontent.com",
-      //     scope: "https://www.googleapis.com/auth/drive.metadata.readonly",
-      //     discoveryDocs: [
-      //       "https://www.googleapis.com/discovery/v1/apis/drive/v3/rest",
-      //     ],
-      //   })
-      //   .then(() => {
-      //     var googleAuth = window.gapi.auth2.getAuthInstance();
-      //     console.log(googleAuth);
-      //   });
+      window.FB.getLoginStatus((response) => {
+        // window.FB.login();
+        console.log(response, firebase.auth().currentUser);
+        if (response.status === "connected") {
+          console.log(response.authResponse.accessToken);
+          firebase
+            .auth()
+            .signInWithCredential(
+              provider.credential({
+                accessToken: response.authResponse.accessToken,
+              })
+            )
+            .then((result) => {
+              var token = result.credential.accessToken;
+              var user = result.user;
+              uid = user.uid;
+              database
+                .ref(act)
+                .once("value")
+                .then(async (snap) => {
+                  var related = snap.child("/" + uid + "/" + i).exists();
+                  console.log(related);
+                  if (related) {
+                    var relatedArray = [];
+                    var appreciatedArray = [];
+                    cogoToast.error("Already " + act + "d");
+                    database
+                      .ref("relate/" + firebase.auth().currentUser.uid)
+                      .on("value", (snapshot) => {
+                        if (snapshot.val())
+                          relatedArray = Object.keys(snapshot.val());
+                        this.setState({ relatedArray });
+                      });
+                    database
+                      .ref("appreciate/" + firebase.auth().currentUser.uid)
+                      .on("value", (snapshot) => {
+                        if (snapshot.val())
+                          appreciatedArray = Object.keys(snapshot.val());
+                        this.setState({ appreciatedArray });
+                      });
+                  } else {
+                    database
+                      .ref(
+                        "1u4shxt1AAvJtyHT-oI566kyLzoaUjXwyQS6WiO-rePo/Sheet1/"
+                      )
+                      .update({ [i + "/" + act]: count + 1 });
+                    await database
+                      .ref(act)
+                      .child(uid + "/" + i)
+                      .set("responded");
+                    cogoToast.success(act + "d");
+                    console.log(
+                      i,
+                      this.state.appreciatedArray,
+                      this.state.relatedArray
+                    );
+                    if (act === "relate") {
+                      console.log("relat");
+                      this.setState({
+                        relatedArray: [...this.state.relatedArray, i],
+                      });
+                    } else {
+                      this.setState({
+                        appreciatedArray: [...this.state.appreciatedArray, i],
+                      });
+                    }
+                  }
+                })
+                .catch((error) => {
+                  console.log(error);
+                });
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        } else
+          window.FB.login(
+            () => {
+              this.handleRelate(act, count, i);
+            },
+            {
+              scope: "email",
+              return_scopes: true,
+              enable_profile_selector: true,
+            }
+          );
+      });
+
       // window.gapi.auth2.authorize(
       //   {
       //     client_id:
@@ -596,6 +758,33 @@ export default class Ama extends Component {
                                 <Row>
                                   <Col>
                                     <label className="form-control-label">
+                                      Email
+                                      <div>
+                                        <small>
+                                          * please enter your email to get the
+                                          update when your question is answered
+                                        </small>
+                                      </div>
+                                    </label>
+                                  </Col>
+                                  <Col>
+                                    <Input
+                                      className="form-control-alternative"
+                                      value={this.state.email}
+                                      name="email"
+                                      onChange={this.handleInputChange}
+                                      placeholder="xyz@gmail.com"
+                                      type="email"
+                                    ></Input>
+                                  </Col>
+                                </Row>
+                              </FormGroup>
+                            </div>
+                            <div>
+                              <FormGroup className="text-left">
+                                <Row>
+                                  <Col>
+                                    <label className="form-control-label">
                                       Category
                                       <div>
                                         <small>
@@ -668,8 +857,8 @@ export default class Ama extends Component {
                           </div>
                           <div>
                             <small>
-                              * please sign in with google account to post your
-                              question to our physicians.
+                              * please sign in with facebook account to post
+                              your question to our physicians.
                             </small>
                           </div>
                         </div>

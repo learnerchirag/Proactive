@@ -27,7 +27,7 @@ export default class App extends Component {
         {/* <FooterMain /> */}
         <BrowserRouter>
           {/* <Switch> */}
-          <Route path="/forum" render={(props) => <Ama {...props} />} />
+          {/* <Route path="/forum" render={(props) => <Ama {...props} />} /> */}
           {/* <Route
               path="/tools/chat-bot"
               render={(props) => <BotPro {...props} />}
@@ -36,10 +36,10 @@ export default class App extends Component {
             path="/tools/irregular-periods"
             render={(props) => <IrregularPeriods {...props} />}
           /> */}
-          {/* <Route
+          <Route
             path="/tools/fertility-timeline"
             render={(props) => <ModernFertility {...props} />}
-          /> */}
+          />
           {/* <Route
             path="/tools/skin-hair"
             render={(props) => <SkinHair {...props} />}

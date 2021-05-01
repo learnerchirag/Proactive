@@ -29,8 +29,8 @@ export default class Share extends Component {
           <h2 className="header-all">Share now</h2>
           <div className="bc-tiles-intro-details">
             <p>
-              Explore and understand treatment options for acne, hirsutism, hair
-              loss.
+              Structure your fertility profile. Follow your timeline at your own
+              terms.
             </p>
 
             {/* <!-- <p><strong>Pick what’s important to you to find your best birth control method:</strong></p> -->  */}
@@ -160,7 +160,7 @@ export default class Share extends Component {
         </div>
         <div
           class="fb-comments d-flex justify-content-center"
-          data-href="http://www.proactiveforher.com/tools/skin-hair/"
+          data-href="http://www.proactiveforher.com/tools/fertility-timeline/"
           data-numposts="5"
           data-width=""
         ></div>

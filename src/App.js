@@ -25,27 +25,27 @@ export default class App extends Component {
         {/* <SkinHair /> */}
         {/* <Ama /> */}
         {/* <FooterMain /> */}
-        <BrowserRouter>
-          {/* <Switch> */}
-          {/* <Route path="/forum" render={(props) => <Ama {...props} />} /> */}
-          {/* <Route
+        <HashRouter>
+          <Switch> 
+          <Route path="/forum" render={(props) => <Ama {...props} />} />
+          <Route
               path="/tools/chat-bot"
               render={(props) => <BotPro {...props} />}
-            /> */}
-          {/* <Route
+            /> 
+          <Route
             path="/tools/irregular-periods"
             render={(props) => <IrregularPeriods {...props} />}
-          /> */}
+          />
           <Route
             path="/tools/fertility-timeline"
             render={(props) => <ModernFertility {...props} />}
           />
-          {/* <Route
+          <Route
             path="/tools/skin-hair"
             render={(props) => <SkinHair {...props} />}
-          /> */}
-          {/* </Switch> */}
-        </BrowserRouter>
+          />
+          </Switch>
+        </HashRouter>
       </div>
     );
   }

@@ -25,7 +25,7 @@ export default class App extends Component {
         {/* <SkinHair /> */}
         {/* <Ama /> */}
         {/* <FooterMain /> */}
-        <HashRouter>
+        <BrowserRouter basename={process.env.PUBLIC_URL}>
           <Switch> 
           <Route path="/forum" render={(props) => <Ama {...props} />} />
           <Route
@@ -45,7 +45,7 @@ export default class App extends Component {
             render={(props) => <SkinHair {...props} />}
           />
           </Switch>
-        </HashRouter>
+        </BrowserRouter>
       </div>
     );
   }
